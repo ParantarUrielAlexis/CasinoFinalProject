@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.CrashController">
+    <top>
+
+        <AnchorPane prefHeight="59.0" prefWidth="1920.0" style="-fx-background-color: #4D415C;" BorderPane.alignment="CENTER">
+            <Label layoutX="838.0" layoutY="12.0" prefHeight="38.0" prefWidth="326.0" styleClass="balance-label-field" stylesheets="@chart.css" text="Balance" textFill="WHITE">
+                <font>
+                    <Font name="Bauhaus 93" size="12.0" />
+                </font>
+            </Label>
+            <Label fx:id="balanceLabel" alignment="CENTER" layoutX="941.0" layoutY="15.0" prefHeight="37.0" prefWidth="172.0" styleClass="balance-label" stylesheets="@chart.css" textFill="WHITE">
+                <font>
+                    <Font name="Cambria" size="30.0" />
+                </font>
+            </Label>
+        </AnchorPane>
+    </top>
+    <left>
+        <AnchorPane prefHeight="951.0" prefWidth="360.0" style="-fx-background-color: #332941;" BorderPane.alignment="CENTER">
+            <Label layoutX="55.0" layoutY="215.0" styleClass="play-label" text="Bet Amount" textFill="WHITE">
+                <font>
+                    <Font name="Cambria" size="30.0" />
+                </font>
+            </Label>
+            <TextField fx:id="betAmountTF" layoutX="50.0" layoutY="252.0" prefHeight="43.0" prefWidth="257.0" promptText="₱0.00" />
+            <Label layoutX="55.0" layoutY="377.0" styleClass="play-label" text="Auto Cashout" textFill="WHITE">
+                <font>
+                    <Font name="Cambria" size="30.0" />
+                </font>
+            </Label>
+            <TextField fx:id="autoCashOutTF" layoutX="55.0" layoutY="415.0" prefHeight="43.0" prefWidth="257.0" />
+         <Label alignment="CENTER" layoutX="190.0" layoutY="253.0" onMouseClicked="#halfBetOnAction" prefHeight="43.0" prefWidth="37.0" styleClass="amount-label" text="1/2" />
+         <Label alignment="CENTER" layoutX="224.0" layoutY="252.0" onMouseClicked="#doubleBetOnAction" prefHeight="45.0" prefWidth="33.0" styleClass="amount-label" text="2x" />
+         <Label alignment="CENTER" layoutX="256.0" layoutY="252.0" onMouseClicked="#maxBetOnAction" prefHeight="45.0" prefWidth="39.0" styleClass="amount-label" text="Max" />
+         <Label alignment="CENTER" layoutX="265.0" layoutY="415.0" onMouseClicked="#removeTextOnAction" prefHeight="44.0" prefWidth="46.0" styleClass="amount-label" text="X" />
+        </AnchorPane>
+    </left>
+    <center>
+        <StackPane prefHeight="951.0" prefWidth="1280.0" style="-fx-background-color: #2A2236;">
+            <VBox prefHeight="951.0" prefWidth="694.0" spacing="10.0" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="951.0" prefWidth="928.0">
+                    <LineChart fx:id="multiplierChart" alternativeRowFillVisible="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="-1.0" prefHeight="951.0" prefWidth="1500.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                        <xAxis>
+                            <NumberAxis styleClass="custom-axis">
+
+                                <tickUnit>1</tickUnit>
+                            </NumberAxis>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis styleClass="custom-axis">
+
+                                <tickUnit>1</tickUnit>
+                            </NumberAxis>
+                        </yAxis>
+                    </LineChart>
+<!--                    <ImageView fx:id="rocketImageView" fitHeight="200" fitWidth="200" />-->
+                    <Label fx:id="multiplierLabel" alignment="CENTER" layoutX="555.0" layoutY="310.0" prefHeight="147.0" prefWidth="392.0" styleClass="multiplier-label" text="0.00x">
+                        <font>
+                            <Font name="Cambria Bold" size="96.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="currentLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="564.0" layoutY="429.0" prefHeight="57.0" prefWidth="374.0" styleClass="payout-label" text="Current Payout">
+                        <font>
+                            <Font name="Cambria Bold" size="46.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="621.0" layoutY="266.0" prefHeight="44.0" prefWidth="274.0" styleClass="profit-label" text="Profit:">
+                        <font>
+                            <Font name="Cambria" size="24.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="profitLabel" layoutX="734.0" layoutY="265.0" prefHeight="46.0" prefWidth="204.0" styleClass="balance-label">
+                        <font>
+                            <Font name="Cambria" size="30.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="cashOutButton" layoutX="648.0" layoutY="500.0" mnemonicParsing="false" onAction="#cashOutOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="play-button" text="Cash-Out">
+                        <font>
+                            <Font name="Cambria Bold" size="25.0" />
+                        </font>
+                    </Button>
+
+                  <Button fx:id="restartButton" layoutX="648.0" layoutY="500.0" mnemonicParsing="false" onAction="#restartGameOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="play-button" text="Bet">
+                      <font>
+                          <Font name="Cambria Bold" size="33.0" />
+                      </font>
+                  </Button>
+                  <Button fx:id="startButton" layoutX="648.0" layoutY="500.0" mnemonicParsing="false" onAction="#startGameOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="play-button" text="Bet">
+                      <font>
+                          <Font name="System Bold" size="33.0" />
+                      </font>
+                  </Button>
+                </AnchorPane>
+            </VBox>
+        </StackPane>
+    </center>
+    <bottom>
+        <AnchorPane prefHeight="70.0" prefWidth="1741.0" style="-fx-background-color: #1E1E1E;" BorderPane.alignment="CENTER">
+            <HBox fx:id="multiplierLabelsHBox" alignment="CENTER_LEFT" layoutX="8.0" layoutY="4.0" prefHeight="39.0" prefWidth="1719.0" spacing="10">
+
+            </HBox>
+        </AnchorPane>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@chart.css" />
+    </stylesheets>
+
+</BorderPane>

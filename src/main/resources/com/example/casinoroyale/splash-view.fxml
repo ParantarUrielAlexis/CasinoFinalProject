@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+
+<?import java.net.URL?>
+<StackPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" >
+    <MediaView fx:id="splashMediaView" fitHeight="1080.0" fitWidth="1920.0" layoutX="175.0" layoutY="189.0" />
+    <ProgressBar fx:id="progressBar" layoutX="588.0" layoutY="635.0" maxWidth="449.0" prefHeight="25.0" prefWidth="449.0" style="-fx-accent: green;" StackPane.alignment="CENTER">
+      <StackPane.margin>
+         <Insets top="800.0" />
+      </StackPane.margin></ProgressBar>
+
+
+    <stylesheets>
+        <URL value="@chart.css" />
+    </stylesheets>
+</StackPane>

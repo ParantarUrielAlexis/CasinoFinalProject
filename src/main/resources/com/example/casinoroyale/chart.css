@@ -1,0 +1,160 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+.balance-label-field {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+    -fx-label-padding: 8px;
+    -fx-background-color: #332941;
+    -fx-background-radius: 10px;
+}
+
+.balance-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+}
+
+.play-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+}
+.text-field {
+    -fx-font-family: 'Poppins';
+    -fx-font-style: italic;
+    -fx-font-weight: 900;
+    -fx-background-radius: 10px;
+    -fx-background-color: #F0C75E;
+    -fx-text-fill: #2A2236;
+    -fx-prompt-text-fill: #2A2236;
+}
+
+.multiplier-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 104px;
+    -fx-font-weight: 700;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+}
+
+.payout-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 40px;
+    -fx-font-weight: 400;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+}
+
+.profit-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+    -fx-background-color: #332941;
+    -fx-background-radius: 20px;
+    -fx-label-padding: 8px;
+}
+
+.amount-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 15px;
+    -fx-font-weight: 800;
+    -fx-font-style: normal;
+    -fx-text-fill: #332941;
+    -fx-cursor: hand;
+}
+
+.play-button {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 15px;
+    -fx-font-weight: 800;
+    -fx-font-style: italic;
+    -fx-text-fill: #332941;
+    -fx-background-color: #F0C75E;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+
+}
+
+/*shit css <3*/
+
+
+/* Style for axes, not used for now */
+.custom-axis .axis-tick-mark {
+    -fx-tick-label-fill: #ffffff; /* Color of axis tick labels */
+}
+
+.custom-axis .axis-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 15px;
+    -fx-text-fill: #ffffff; /* Color of axis label */
+}
+
+/*CHART CSS*/
+.chart-plot-background {
+    -fx-background-color: #2A2236;
+    -fx-text-fill: white;
+}
+
+/*the circle u look for*/
+.chart-line-symbol {
+    -fx-background-color: null; /* Remove the default circles */
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #f1dc66; /* Change line color to blue */
+    -fx-stroke-width: 5px; /* Change line width */
+    -fx-effect: null;
+}
+
+/* Style the axes */
+.axis {
+    -fx-tick-label-fill: #ffffff; /* Color of axis labels */
+    -fx-font-size: 12px; /* Font size of axis labels */
+}
+
+/* Style the chart legend */
+.chart-legend {
+    -fx-background-color: #2A2236; /* Transparent background color */
+}
+
+
+/*PROGRESS BAR FOR SPLASH SCREEEN*/
+.progress-bar {
+    -fx-background-color: transparent;
+}
+
+.progress-bar .track {
+    -fx-background-color: #2A2236; /* Background color of the progress bar track */
+    -fx-background-insets: 0;
+}
+
+/* Add animation to the progress bar */
+.progress-bar .bar {
+    -fx-background-color: #f1dc66;
+    -fx-background-radius: 0px;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 2px;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.3) , 10,0,0,1 );
+}
+
+.progress-bar .bar .percentage {
+    -fx-fill: #f1dc66; /* Color of the percentage text inside the progress bar */
+}
+
+
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="701.0" prefWidth="462.0" styleClass="anchorpane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HiloController">
+   <children>
+      <Button fx:id="btnHigh" disable="true" layoutX="232.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#btnHighClicked" prefHeight="44.0" prefWidth="221.0" styleClass="btn" stylesheets="@styles.css" text="High or Same" />
+      <Button fx:id="btnLow" disable="true" layoutX="232.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#btnLowClicked" prefHeight="50.0" prefWidth="222.0" styleClass="btn2" stylesheets="@styles.css" text="Low or Same" />
+      <ImageView fx:id="cardRandomizer" fitHeight="389.0" fitWidth="221.0" layoutX="7.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../cards/cardbg.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cardRandomizer2" fitHeight="313.0" fitWidth="273.0" layoutX="233.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../cards/cardbg.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="inputBalance" layoutX="7.0" layoutY="636.0" prefHeight="58.0" prefWidth="222.0" promptText="Enter Amount" styleClass="textfield" stylesheets="@styles.css" />
+      <Button fx:id="betID" layoutX="232.0" layoutY="636.0" mnemonicParsing="false" onAction="#playGame" prefHeight="58.0" prefWidth="222.0" stylesheets="@styles.css" text="Bet" textFill="GOLD">
+         <styleClass>
+            <String fx:value="btn3" />
+            <String fx:value="btn4" />
+         </styleClass></Button>
+      <Text fill="GOLD" layoutX="23.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: " wrappingWidth="155.20002899169924">
+         <font>
+            <Font name="Franklin Gothic Medium Italic" size="25.0" />
+         </font></Text>
+      <Button fx:id="btnSkip" disable="true" layoutX="7.0" layoutY="190.0" mnemonicParsing="false" onAction="#skipCard" prefHeight="26.0" prefWidth="81.0" styleClass="btn4" stylesheets="@styles.css" text="Skip" textFill="GOLD" />
+      <Text fx:id="balanceID" fill="GOLD" layoutX="135.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="145.5999389648439">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font></Text>
+      <Text fx:id="oddsLow" layoutX="323.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" wrappingWidth="45.59991455078125">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Text>
+      <Text fx:id="oddsHigh" layoutX="330.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" wrappingWidth="45.59991455078125">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Text>
+      <Button fx:id="btnCollect" alignment="BASELINE_LEFT" disable="true" layoutX="7.0" layoutY="538.0" mnemonicParsing="false" onAction="#collectReward" prefHeight="50.0" prefWidth="222.0" styleClass="btn3" stylesheets="@styles.css" text="     Collect: ">
+         <font>
+            <Font name="System Italic" size="23.0" />
+         </font>
+      </Button>
+      <Text fx:id="balancePayout" layoutX="127.0" layoutY="571.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="80.53668212890625">
+         <font>
+            <Font name="Franklin Gothic Medium" size="22.0" />
+         </font>
+      </Text>
+      <Text fill="GOLD" layoutX="188.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HILO">
+         <font>
+            <Font name="Franklin Gothic Heavy Italic" size="49.0" />
+         </font>
+      </Text>
+      <Text fill="#95a5ff" layoutX="146.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JACKPOT">
+         <font>
+            <Font name="Franklin Gothic Heavy Italic" size="40.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="314.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../backgrounds/treasure_chest.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="jackpotID" fill="GOLD" layoutX="201.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1080">
+         <font>
+            <Font name="Franklin Gothic Heavy" size="35.0" />
+         </font>
+      </Text>
+      <Text fill="GOLD" layoutX="181.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x">
+         <font>
+            <Font name="Franklin Gothic Heavy Italic" size="30.0" />
+         </font>
+      </Text>
+      <Pane layoutX="-3.0" layoutY="132.0" opacity="0.5" prefHeight="2.0" prefWidth="462.0" style="-fx-background-color: #ffd700;" />
+      <Text fx:id="showINoBalance" fill="RED" layoutX="259.0" layoutY="616.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insufficient Balance" wrappingWidth="200.0">
+         <font>
+            <Font name="Franklin Gothic Heavy" size="17.0" />
+         </font>
+      </Text>
+      <Text fx:id="showNoStake" fill="RED" layoutX="253.0" layoutY="616.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You must entter a stake" wrappingWidth="200.0">
+         <font>
+            <Font name="Franklin Gothic Heavy" size="17.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="showWin" fitHeight="305.0" fitWidth="374.0" layoutX="81.0" layoutY="225.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../backgrounds/win.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="showLose" fitHeight="93.0" fitWidth="278.0" layoutX="98.0" layoutY="331.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="282.0" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="90.0">
+         <image>
+            <Image url="@../../../backgrounds/lose.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="showCollected" fitHeight="305.0" fitWidth="314.0" layoutX="81.0" layoutY="225.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="176.7999999999999" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="81.40000000000003" AnchorPane.topAnchor="224.8">
+         <image>
+            <Image url="@../../../backgrounds/collected.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="foreground" fitHeight="707.0" fitWidth="477.0" layoutX="-1.0" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@../../../backgrounds/hiloforebg.jpg" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="progressBarID" layoutX="60.0" layoutY="656.0" prefHeight="18.0" prefWidth="348.0" progress="0.0" visible="false" />
+   </children>
+</AnchorPane>

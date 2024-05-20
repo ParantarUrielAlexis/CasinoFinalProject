@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="938.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SignInController">
+   <children>
+      <ImageView fitHeight="680.0" fitWidth="938.0" opacity="0.41">
+         <image>
+            <Image url="@../../../backgrounds/signinbg.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="-15.0" layoutY="-23.0" prefHeight="706.0" prefWidth="938.0">
+         <children>
+            <TextField fx:id="tfUsername" layoutX="362.0" layoutY="243.0" prefHeight="42.0" prefWidth="247.0" promptText="Username" styleClass="textfield" stylesheets="@styles.css" />
+            <Button fx:id="btnRegister" layoutX="361.0" layoutY="412.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="42.0" prefWidth="247.0" styleClass="btnShow" stylesheets="@styles.css" text="Sign In" />
+            <Button fx:id="btnSignIn" layoutX="356.0" layoutY="570.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="247.0" styleClass="btnShow" stylesheets="@styles.css" text="Register" />
+            <PasswordField fx:id="pfPassword" layoutX="361.0" layoutY="303.0" prefHeight="42.0" prefWidth="247.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="ShowPassword" layoutX="361.0" layoutY="303.0" prefHeight="42.0" prefWidth="247.0" promptText="Password:" styleClass="textfield" stylesheets="@styles.css" visible="false" />
+            <CheckBox fx:id="cbBtn" layoutX="362.0" layoutY="371.0" mnemonicParsing="false" onAction="#showPassword" styleClass="textShow" stylesheets="@styles.css" text="Show password" textFill="WHITE">
+               <font>
+                  <Font name="Cambria" size="13.0" />
+               </font></CheckBox>
+            <Text fill="GOLD" layoutX="390.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Signin Account" wrappingWidth="188.11669921875">
+               <font>
+                  <Font name="Cambria" size="27.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="403.0" layoutY="564.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have account?">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text fill="#b4abab" layoutX="342.0" layoutY="697.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright ©2024-2075 CasinoRoyale. All rights reserved." />
+            <Text fx:id="showIncorrect" fill="RED" layoutX="354.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect username/password" textAlignment="CENTER" visible="false" wrappingWidth="247.20000000000005">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="showEmptyFields" fill="RED" layoutX="354.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please input the fields" textAlignment="CENTER" visible="false" wrappingWidth="247.20000000000005">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

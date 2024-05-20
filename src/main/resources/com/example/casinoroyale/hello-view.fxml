@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HelloController">
+   <children>
+      <AnchorPane prefHeight="543.0" prefWidth="1070.0" styleClass="root" stylesheets="@styles.css">
+         <children>
+            <Button fx:id="btnHilo" layoutX="14.0" layoutY="135.0" mnemonicParsing="false" onAction="#onHiloBTNClick" prefHeight="243.0" prefWidth="234.0" style="-fx-background-color: black;" stylesheets="@styles.css">
+               <graphic>
+                  <ImageView fitHeight="241.0" fitWidth="235.0" pickOnBounds="true">
+                     <Image url="@../../../backgrounds/hilobg.png" />
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="268.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCrashBTNClick" prefHeight="243.0" prefWidth="234.0" style="-fx-background-color: black;" stylesheets="@styles.css">
+               <graphic>
+                  <ImageView fitHeight="243.0" fitWidth="241.0" pickOnBounds="true">
+                     <Image url="@../../../backgrounds/crashbg.png" />
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="543.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
+            <Button layoutX="804.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
+            <Button fx:id="btnDeposit" layoutX="973.0" layoutY="65.0" mnemonicParsing="false" onAction="#goDeposit" text="Deposit" />
+            <Text fill="GOLD" layoutX="32.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: ">
+               <font>
+                  <Font name="Franklin Gothic Medium Italic" size="25.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
