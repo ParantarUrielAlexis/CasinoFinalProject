@@ -86,8 +86,8 @@ public class CrashController {
         balanceLabel.setText("₱" + String.format("%.2f", userBalance));
     }
 
-    private int retrieveUserBalance() {
-        int userBalance = -1; // Default value in case of error
+    private double retrieveUserBalance() {
+        double userBalance = -1; // Default value in case of error
         try (Connection c = MySQLConnection.getConnection();
              PreparedStatement preparedStatement = c.prepareStatement("SELECT balance FROM users WHERE id = ?")) {
 
@@ -102,7 +102,7 @@ public class CrashController {
 
             // Check if a result is returned and get the balance
             if (result.next()) {
-                userBalance = result.getInt("balance");
+                userBalance = result.getDouble("balance"); // Retrieve the balance as double
             }
 
         } catch (SQLException e) {
