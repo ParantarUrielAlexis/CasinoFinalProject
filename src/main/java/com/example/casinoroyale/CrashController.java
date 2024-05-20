@@ -1,9 +1,6 @@
 package com.example.casinoroyale;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -23,14 +20,12 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.UnaryOperator;
-
-
-
 
 public class CrashController {
 
@@ -63,7 +58,7 @@ public class CrashController {
     private final Random random = new Random();
     private double cashOutMultiplier = 0;
     private boolean cashedOut = false;
-    private double balance = 200;
+    private double userBalance = 200;
     private double betAmount;
     private XYChart.Series<Number, Number> series;
     private int time = 0;
@@ -75,11 +70,45 @@ public class CrashController {
 
     @FXML
     public void initialize() {
+        // Initialize user balance
+        userBalance = retrieveUserBalance();
+
+        // Use the userBalance variable as needed
+        if (userBalance != -1) {
+            System.out.println("User Balance: " + userBalance);
+        }
+
+        // Other initialization code
         initializeChart();
         initializeTextFormatters();
         series = new XYChart.Series<>();
         multiplierChart.getData().add(series);
-        balanceLabel.setText("₱" + String.format("%.2f", balance));
+        balanceLabel.setText("₱" + String.format("%.2f", userBalance));
+    }
+
+    private int retrieveUserBalance() {
+        int userBalance = -1; // Default value in case of error
+        try (Connection c = MySQLConnection.getConnection();
+             PreparedStatement preparedStatement = c.prepareStatement("SELECT balance FROM users WHERE id = ?")) {
+
+            // Get the user ID from the SignInController
+            int userId = SignInController.getUserId();
+
+            // Set the user ID parameter in the SQL query
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query and get the result set
+            ResultSet result = preparedStatement.executeQuery();
+
+            // Check if a result is returned and get the balance
+            if (result.next()) {
+                userBalance = result.getInt("balance");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userBalance;
     }
 
     private void initializeChart() {
@@ -135,15 +164,15 @@ public class CrashController {
                 return;
             }
 
-            if (balance < betAmount || betAmount < 100) {
+            if (userBalance < betAmount || betAmount < 100) {
                 System.err.println("Insufficient balance or bet amount too low.");
                 return;
             }
 
-            balance -= betAmount;
-            balanceLabel.setText("₱" + String.format("%.2f", balance));
+            userBalance -= betAmount;
+            balanceLabel.setText("₱" + String.format("%.2f", userBalance));
+            updateUserBalanceInDatabase();
 
-//            If unknown error, I remove the start Button sets
             restartButton.setDisable(true);
             restartButton.setVisible(false);
             cashOutButton.setVisible(true);
@@ -207,6 +236,7 @@ public class CrashController {
         restartButton.setDisable(false);
 
         updateMultiplierLabels(currentMultiplier);
+        updateUserBalanceInDatabase();
     }
 
     private double getMultiplierIncrement(double multiplier) {
@@ -276,14 +306,16 @@ public class CrashController {
                 System.out.println("Cashed out at multiplier: " + cashOutMultiplier);
                 System.out.println("Your winnings: " + winAmount);
 
-                balance += winAmount;
-                balanceLabel.setText("₱" + String.format("%.2f", balance));
+                userBalance += winAmount;
+                balanceLabel.setText("₱" + String.format("%.2f", userBalance));
 
                 series.getData().add(createCashOutDataPoint(time, currentMultiplier));
 
                 isCrashed = false;
                 cashedOut = true;
                 autoCashOutTF.setDisable(false);
+
+                updateUserBalanceInDatabase();
             }
         });
     }
@@ -304,7 +336,7 @@ public class CrashController {
     }
 
     public void doubleBetOnAction(MouseEvent ignoredEvent) {
-        if (balance <= betAmount) return;
+        if (userBalance <= betAmount) return;
 
         // Get the current bet amount from the text field
         String betAmountText = betAmountTF.getText().trim().replace("₱", "");
@@ -322,8 +354,8 @@ public class CrashController {
     }
 
     public void maxBetOnAction(MouseEvent ignoredEvent) {
-        // Set betAmount to balance
-        betAmount = balance;
+        // Set betAmount to userBalance
+        betAmount = userBalance;
         // Update the text field with the new bet amount
         betAmountTF.setText("₱" + String.format("%.2f", betAmount));
     }
@@ -370,5 +402,24 @@ public class CrashController {
         });
 
         return dataPoint;
+    }
+
+    private void updateUserBalanceInDatabase() {
+        try (Connection c = MySQLConnection.getConnection();
+             PreparedStatement preparedStatement = c.prepareStatement("UPDATE users SET balance = ? WHERE id = ?")) {
+
+            // Get the user ID from the SignInController
+            int userId = SignInController.getUserId();
+
+            // Set the balance and user ID parameters in the SQL query
+            preparedStatement.setDouble(1, userBalance);
+            preparedStatement.setInt(2, userId);
+
+            // Execute the update
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
