@@ -16,6 +16,10 @@ import javafx.util.Duration;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -61,9 +65,12 @@ public class HiloController {
     private int skipCounter = 1;
     private int correctGuessCount = 0;
 
+
     // user balance user
     static int userBalance;
     public void setForeground() {
+        userBalance = (int) retrieveUserBalance();
+        balanceID.setText(String.valueOf(userBalance));
         foreground.setVisible(true); // Set visibility to true initially
         progressBarID.setVisible(true); // Set visibility to true initially
         progress();
@@ -216,6 +223,8 @@ public class HiloController {
 
     public void initialized() {
 
+        userBalance = (int) retrieveUserBalance();
+        balanceID.setText(String.valueOf(userBalance));
         // Generate random card numbers for each ImageView
         cardNumber1 = new Random().nextInt(52); // 0 to 51
         int cardNumber2 = new Random().nextInt(52);
@@ -242,19 +251,22 @@ public class HiloController {
 
 
     public int playGame() {
-
         balanceID.setText(String.valueOf(userBalance));
 
         if (inputBalance.getText().isEmpty()) {
             showNoStake.setOpacity(1);
             return -1; // Return -1 to indicate no bet amount entered
         }
+
         // Deduct the bet amount from the balance
         int betAmount = Integer.parseInt(inputBalance.getText()); // Get the bet amount from the input
-        int currentBalance = Integer.parseInt(balanceID.getText()); // Get the current balance
+        int currentBalance = userBalance; // Get the current balance
         int newBalance = currentBalance - betAmount; // Calculate the new balance after deducting the bet
+
         if (newBalance >= 0) { // Ensure the balance is not negative
+            userBalance = newBalance;
             balanceID.setText(String.valueOf(newBalance)); // Update the balance text
+            updateUserBalanceInDatabase(); // Update the balance in the database
         } else {
             showINoBalance.setOpacity(1);
             return -1; // Return -1 to indicate insufficient balance
@@ -262,8 +274,9 @@ public class HiloController {
 
         // Initialize the game
         cardSound();
-        initialized();
+        initialized(); // Refresh the game
         setOddsOfCard();
+
         // Enable/disable buttons as needed
         btnHigh.setDisable(false);
         btnLow.setDisable(false);
@@ -271,8 +284,10 @@ public class HiloController {
         btnCollect.setDisable(true);
         betID.setDisable(true);
         balancePayout.setText(String.valueOf(betAmount));
+
         return cardNumber1;
     }
+
 
 
 
@@ -363,6 +378,7 @@ public class HiloController {
                 setJackpot();
             } else {
                 loseSound();
+                updateUserBalanceInDatabase();
                 showLoseForAMoment();
                 showCardForAMoment();
                 balancePayout.setText("");
@@ -555,34 +571,43 @@ public class HiloController {
     }
 
     public void collectReward(ActionEvent actionEvent) {
-        // Get the final balance from the balancePayout text field
-        if(correctGuessCount == 50){
+        // Check if the correct guess count hits the jackpot threshold
+        if (correctGuessCount == 50) {
             getJackpot();
             correctGuessCount = 0;
         }
+
         showCollected.setOpacity(1);
         collectSound();
+
         // Pause for 2 seconds before hiding the element and enabling buttons
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
         pauseTransition.setOnFinished(event -> {
             showCollected.setOpacity(0); // Hide the element after 2 seconds
         });
         pauseTransition.play();
+
+        // Retrieve the final balance from the balancePayout text field
         int finalBalance = Integer.parseInt(balancePayout.getText());
 
-        // Assuming balanceID is the ID of the balance field you want to update
-        // You'll need to replace it with the correct ID of your balance field
-        int currentBalance = Integer.parseInt(balanceID.getText()); // Assuming balanceID is the ID of the balance field
+        // Retrieve the current balance from the balanceID label
+        int currentBalance = Integer.parseInt(balanceID.getText());
 
         // Update the balanceID by adding the final balance
         int updatedBalance = currentBalance + finalBalance;
         balanceID.setText(String.valueOf(updatedBalance));
 
-        correctGuessCount++;
+        // Update the userBalance field and save it to the database
+        userBalance = updatedBalance;
+        updateUserBalanceInDatabase();
 
+        // Clear the balancePayout field
         balancePayout.setText("");
 
+        // Increment the correct guess count
+        correctGuessCount++;
 
+        // Optionally show the card for a moment
         showCardForAMoment();
     }
     public void setJackpot(){
@@ -651,5 +676,47 @@ public class HiloController {
         Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();
+    }
+    private void updateUserBalanceInDatabase() {
+        try (Connection c = MySQLConnection.getConnection();
+             PreparedStatement preparedStatement = c.prepareStatement("UPDATE users SET balance = ? WHERE id = ?")) {
+
+            // Get the user ID from the SignInController
+            int userId = SignInController.getUserId();
+
+            // Set the balance and user ID parameters in the SQL query
+            preparedStatement.setDouble(1, userBalance);
+            preparedStatement.setInt(2, userId);
+
+            // Execute the update
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private double retrieveUserBalance() {
+        double userBalance = -1; // Default value in case of error
+        try (Connection c = MySQLConnection.getConnection();
+             PreparedStatement preparedStatement = c.prepareStatement("SELECT balance FROM users WHERE id = ?")) {
+
+            // Get the user ID from the SignInController
+            int userId = SignInController.getUserId();
+
+            // Set the user ID parameter in the SQL query
+            preparedStatement.setInt(1, userId);
+
+            // Execute the query and get the result set
+            ResultSet result = preparedStatement.executeQuery();
+
+            // Check if a result is returned and get the balance
+            if (result.next()) {
+                userBalance = result.getDouble("balance"); // Retrieve the balance as double
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userBalance;
     }
 }
