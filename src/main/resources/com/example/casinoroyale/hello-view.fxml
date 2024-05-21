@@ -21,14 +21,26 @@
                      <Image url="@../../../backgrounds/crashbg.png" />
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="543.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
-            <Button layoutX="804.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
+            <Button layoutX="543.0" layoutY="135.0" mnemonicParsing="false" onAction="#onSlotMachineBTNClick" prefHeight="243.0" prefWidth="234.0" textFill="#030303">
+               <graphic>
+                  <ImageView fitHeight="243.0" fitWidth="241.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../../backgrounds/slotmachine.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="811.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
             <Button fx:id="btnDeposit" layoutX="973.0" layoutY="65.0" mnemonicParsing="false" onAction="#goDeposit" text="Deposit" />
             <Text fill="GOLD" layoutX="32.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: ">
                <font>
                   <Font name="Franklin Gothic Medium Italic" size="25.0" />
                </font>
             </Text>
+            <ImageView fitHeight="243.0" fitWidth="241.0" layoutX="540.0" layoutY="135.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="540.0" AnchorPane.rightAnchor="289.0" AnchorPane.topAnchor="1358.0">
+               <image>
+                  <Image url="@../../../backgrounds/slotmachine.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

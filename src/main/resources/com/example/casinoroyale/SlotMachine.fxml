@@ -1,97 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SlotMachine">
+<AnchorPane minHeight="900.0" minWidth="1800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SlotMachine">
    <children>
-      <VBox alignment="CENTER" prefHeight="1010.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900.0" minWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="700.0" prefWidth="1920.0" spacing="10.0">
-               <children>
-                  <VBox fillWidth="true" prefHeight="563.0" prefWidth="1921.0">
-                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Button">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets left="50.0" />
-                           </VBox.margin>
-                        </Button>
-                        <HBox alignment="TOP_CENTER" prefHeight="878.0" prefWidth="1921.0" spacing="90.0">
-                           <children>
-                              <ImageView id="Card1" fx:id="Card1" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_hearts.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card2" fx:id="Card2" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_diamonds.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card3" fx:id="Card3" fitHeight="200.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_spades.png" /> </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="878.0" prefWidth="1921.0" spacing="90.0">
-                           <children>
-                              <ImageView id="Card4" fx:id="Card4" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_hearts.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card5" fx:id="Card5" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_diamonds.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card6" fx:id="Card6" fitHeight="200.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_spades.png" /> </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="878.0" prefWidth="1921.0" spacing="90.0">
-                           <children>
-                              <ImageView id="Card7" fx:id="Card7" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_hearts.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card8" fx:id="Card8" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_diamonds.png" /> </image>
-                              </ImageView>
-                              <ImageView id="Card9" fx:id="Card9" fitHeight="200.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../cards/queen_of_spades.png" /> </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Button">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="50.0" left="50.0" right="50.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="135.0" prefWidth="1915.0" spacing="10.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onSpinBTN" text="Spin" />
-               </children>
-            </HBox>
+            <ImageView fitHeight="850.0" fitWidth="1550.0" focusTraversable="true" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../SlotMachine/SlotMachine.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="State" fitHeight="101.0" fitWidth="779.0" layoutX="395.0" layoutY="131.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../SlotMachine/Jackpot.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE" graphicTextGap="0.0" layoutX="668.0" layoutY="658.0" mnemonicParsing="false" onAction="#onSpinBTN" prefHeight="75.0" prefWidth="211.0">
+               <graphic>
+                  <ImageView fitHeight="82.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/SlotBTN.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <ImageView fx:id="Card1" fitHeight="196.0" fitWidth="172.0" layoutX="504.0" layoutY="333.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../SlotMachine/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Card2" fitHeight="196.0" fitWidth="172.0" layoutX="695.0" layoutY="333.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../SlotMachine/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Card3" fitHeight="196.0" fitWidth="172.0" layoutX="884.0" layoutY="333.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../SlotMachine/1.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="343.0" layoutY="646.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/TopUP.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="343.0" layoutY="712.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="1013.0" layoutY="648.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/Plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="1013.0" layoutY="689.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/Minus.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="1013.0" layoutY="731.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../SlotMachine/Max.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <TextArea layoutX="1113.0" layoutY="666.0" prefHeight="81.0" prefWidth="129.0" />
          </children>
-      </VBox>
-      <HBox alignment="CENTER" layoutX="-66.0" prefHeight="68.0" prefWidth="1920.0" AnchorPane.bottomAnchor="1012.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" text="Button" />
-         </children>
-      </HBox>
+      </Pane>
    </children>
 </AnchorPane>

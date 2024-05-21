@@ -1,16 +1,27 @@
 package com.example.casinoroyale;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class SlotMachine implements Initializable {
+
+    private ArrayList<String> imagePaths1;
+    private ArrayList<String> imagePaths2;
+    private ArrayList<String> imagePaths3;// List to store image paths
+
     @FXML
     ImageView Card1;
     @FXML
@@ -19,50 +30,91 @@ public class SlotMachine implements Initializable {
     ImageView Card3;
 
     @FXML
-    ImageView Card4;
-    @FXML
-    ImageView Card5;
-    @FXML
-    ImageView Card6;
-
-    @FXML
-    ImageView Card7;
-    @FXML
-    ImageView Card8;
-    @FXML
-    ImageView Card9;
+    ImageView State;
 
 
-    public void onSpinBTN(ActionEvent actionEvent) {
-        TranslateTransition[] transition = new TranslateTransition[9];
-        ImageView[] cards = new ImageView[9];
+    public void onSpinBTN(ActionEvent actionEvent) throws InterruptedException {
+        imagePaths1 = new ArrayList<>();
+        imagePaths2 = new ArrayList<>();
+        imagePaths3 = new ArrayList<>();// Reinitialize the list each time to avoid duplicates
 
-        // Assign your ImageView references to the array
-        cards[0] = Card1;
-        cards[1] = Card2;
-        cards[2] = Card3;
-        cards[3] = Card4;
-        cards[4] = Card5;
-        cards[5] = Card6;
-        cards[6] = Card7;
-        cards[7] = Card8;
-        cards[8] = Card9;
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
+        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
 
-        for (int i = 0; i < cards.length; i++) {
-            TranslateTransition translate = new TranslateTransition();
-            translate.setNode(cards[i]);
-            translate.setDuration(Duration.millis(1000));
-            translate.setCycleCount(TranslateTransition.INDEFINITE);
-            translate.setByY(250 * ((double) i / 3 + 1)); // Adjust Y translation based on row
-            translate.play();
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
+        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
 
-            transition[i] = translate;
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
+        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
+
+        Collections.shuffle(imagePaths1);
+        Collections.shuffle(imagePaths2);
+        Collections.shuffle(imagePaths3);
+
+        Card1.setImage(new Image(imagePaths1.get(0)));
+        Card2.setImage(new Image(imagePaths2.get(0)));
+        Card3.setImage(new Image(imagePaths3.get(0)));
+
+        if (checkAllSame()) {
+            // Jackpot! Display jackpot message
+            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\Jackpot.gif"));
+            System.out.println("Jackpot!");  // Replace with your UI update for Jackpot
+        } else if (checkTwoSame()) {
+            // Two of the same! Display win 100 message
+            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\YouWin.gif"));
+            System.out.println("Win 100!");  // Replace with your UI update for win 100
+        } else {
+            // No win
+            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\YouLost.gif"));
+            System.out.println("Try again!");  // Replace with your UI update for no win
         }
+
     }
+
+    private boolean checkAllSame() {
+        String firstImage = imagePaths1.get(0);
+        return firstImage.equals(imagePaths2.get(0)) && firstImage.equals(imagePaths3.get(0));
+    }
+
+    private boolean checkTwoSame() {
+        String image1 = imagePaths1.get(0);
+        String image2 = imagePaths2.get(0);
+        String image3 = imagePaths3.get(0);
+
+        return (image1.equals(image2) && !image1.equals(image3)) ||
+                (image2.equals(image3) && !image1.equals(image2)) ||
+                (image1.equals(image3) && !image1.equals(image2));
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-}
 
+
+}
