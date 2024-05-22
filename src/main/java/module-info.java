@@ -13,6 +13,7 @@ module com.example.casinoroyale {
     requires java.sql;
     requires javafx.media;
     requires annotations;
+    requires java.desktop;
 
     opens com.example.casinoroyale to javafx.fxml;
     exports com.example.casinoroyale;
