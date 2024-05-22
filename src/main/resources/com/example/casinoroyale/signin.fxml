@@ -9,11 +9,11 @@
    <left>
       <AnchorPane prefHeight="1080.0" prefWidth="961.0" style="-fx-background-color: #F0CF7B;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="831.0" fitWidth="803.0" layoutX="97.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="831.0" fitWidth="803.0" layoutX="97.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="125.33331298828125" AnchorPane.topAnchor="109.0">
                <image>
                   <Image url="@../../../backgrounds/pandabg2.png" />
                </image></ImageView>
-            <Label layoutX="375.0" layoutY="798.0" styleClass="welcome-label" stylesheets="@chart.css" text="Welcome!" />
+            <Label layoutX="375.0" layoutY="798.0" styleClass="welcome-label" stylesheets="@chart.css" text="Welcome!" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="798.0" />
             <Label alignment="CENTER" layoutX="180.0" layoutY="864.0" prefHeight="91.0" prefWidth="572.0" styleClass="intro-label" stylesheets="@chart.css" text="Step into a world of luck and luxury where the charm of pandas meets the thrill of gambling! At Panda Playhouse, we're dedicated to providing you with an unforgettable gaming experience filled with excitement, adventure, and big wins!" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
          </children></AnchorPane>
    </left>

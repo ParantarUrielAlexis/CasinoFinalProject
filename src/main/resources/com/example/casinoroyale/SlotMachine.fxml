@@ -6,11 +6,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="900.0" minWidth="1800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SlotMachine">
+<AnchorPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SlotMachine">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900.0" minWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="850.0" fitWidth="1550.0" focusTraversable="true" pickOnBounds="true">
+            <ImageView fitHeight="1080.0" fitWidth="1920.0" focusTraversable="true" pickOnBounds="true">
                <image>
                   <Image url="@../../../SlotMachine/SlotMachine.png" />
                </image>
@@ -21,12 +21,12 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="State" fitHeight="101.0" fitWidth="779.0" layoutX="395.0" layoutY="131.0" pickOnBounds="true">
+            <ImageView fx:id="State" fitHeight="125.0" fitWidth="962.0" layoutX="484.0" layoutY="168.0" pickOnBounds="true">
                <image>
-                  <Image url="@../../../SlotMachine/Jackpot.png" />
+                  <Image url="@../../../SlotMachine/Jackpot.gif" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE" graphicTextGap="0.0" layoutX="668.0" layoutY="658.0" mnemonicParsing="false" onAction="#onSpinBTN" prefHeight="75.0" prefWidth="211.0">
+            <Button fx:id="spinBTN" alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE" graphicTextGap="0.0" layoutX="844.0" layoutY="847.0" mnemonicParsing="false" onAction="#onSpinBTN" prefHeight="75.0" prefWidth="211.0">
                <graphic>
                   <ImageView fitHeight="82.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -34,22 +34,19 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <ImageView fx:id="Card1" fitHeight="196.0" fitWidth="172.0" layoutX="504.0" layoutY="333.0" pickOnBounds="true">
+            <ImageView fx:id="Card1" fitHeight="247.0" fitWidth="210.0" layoutX="626.0" layoutY="425.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../SlotMachine/1.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="Card2" fitHeight="196.0" fitWidth="172.0" layoutX="695.0" layoutY="333.0" pickOnBounds="true">
+               </image></ImageView>
+            <ImageView fx:id="Card2" fitHeight="247.0" fitWidth="210.0" layoutX="863.0" layoutY="425.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../SlotMachine/1.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="Card3" fitHeight="196.0" fitWidth="172.0" layoutX="884.0" layoutY="333.0" pickOnBounds="true">
+               </image></ImageView>
+            <ImageView fx:id="Card3" fitHeight="247.0" fitWidth="210.0" layoutX="1097.0" layoutY="425.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../SlotMachine/1.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="343.0" layoutY="646.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0">
+               </image></ImageView>
+            <Button layoutX="419.0" layoutY="833.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0">
                <graphic>
                   <ImageView fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -58,7 +55,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="343.0" layoutY="712.0" mnemonicParsing="false">
+            <Button layoutX="419.0" layoutY="900.0" mnemonicParsing="false" onAction="#onBackClick">
                <graphic>
                   <ImageView fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,7 +64,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="1013.0" layoutY="648.0" mnemonicParsing="false">
+            <Button layoutX="1240.0" layoutY="840.0" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,7 +72,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="1013.0" layoutY="689.0" mnemonicParsing="false">
+            <Button layoutX="1240.0" layoutY="882.0" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -83,7 +80,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="1013.0" layoutY="731.0" mnemonicParsing="false">
+            <Button layoutX="1240.0" layoutY="925.0" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -91,7 +88,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <TextArea layoutX="1113.0" layoutY="666.0" prefHeight="81.0" prefWidth="129.0" />
+            <TextArea layoutX="1362.0" layoutY="860.0" prefHeight="81.0" prefWidth="129.0" />
          </children>
       </Pane>
    </children>

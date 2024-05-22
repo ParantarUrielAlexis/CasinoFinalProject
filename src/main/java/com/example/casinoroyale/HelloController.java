@@ -15,9 +15,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -192,12 +194,20 @@ public class HelloController {
     @FXML
     public void onSlotMachineBTNClick(ActionEvent event) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SlotMachine.fxml"));
-            Parent root = fxmlLoader.load();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SlotMachine.fxml")));
+            double dpiScale = Main.DPIUtil.getDPIScale();
+
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
             Scene scene = new Scene(root);
+
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            stage.setFullScreen(true);
             stage.show();
+
+
 
         } catch (IOException e) {
             System.err.println("Error loading FXML file: " + e.getMessage());
@@ -223,6 +233,7 @@ public class HelloController {
         mediaPlayer.play();
     }
 
+
     public void goDeposit(ActionEvent event) {
         try {
             // Load the FXML file
@@ -247,6 +258,19 @@ public class HelloController {
             // Handle any IOException that occurs during loading
             e.printStackTrace();
             // You might want to show an error message to the user here
+        }
+    }
+
+    public static class DPIUtil {
+        public static double getDPIScale() {
+            double dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+            double defaultDPI = 96.0; // Default DPI for most systems
+
+            if (dpi == 120) {
+                defaultDPI = 150;
+            }
+            System.out.println(dpi);
+            return dpi / defaultDPI;
         }
     }
 }
