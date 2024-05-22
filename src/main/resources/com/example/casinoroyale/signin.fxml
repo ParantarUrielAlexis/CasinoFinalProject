@@ -1,55 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="938.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SignInController">
-   <children>
-      <ImageView fitHeight="680.0" fitWidth="938.0" opacity="0.41">
-         <image>
-            <Image url="@../../../backgrounds/signinbg.jpg" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="-15.0" layoutY="-23.0" prefHeight="706.0" prefWidth="938.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SignInController">
+   <left>
+      <AnchorPane prefHeight="1080.0" prefWidth="961.0" style="-fx-background-color: #F0CF7B;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tfUsername" layoutX="362.0" layoutY="243.0" prefHeight="42.0" prefWidth="247.0" promptText="Username" styleClass="textfield" stylesheets="@styles.css" />
-            <Button fx:id="btnRegister" layoutX="361.0" layoutY="412.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="42.0" prefWidth="247.0" styleClass="btnShow" stylesheets="@styles.css" text="Sign In" />
-            <Button fx:id="btnSignIn" layoutX="356.0" layoutY="570.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="247.0" styleClass="btnShow" stylesheets="@styles.css" text="Register" />
-            <PasswordField fx:id="pfPassword" layoutX="361.0" layoutY="303.0" prefHeight="42.0" prefWidth="247.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" />
-            <TextField fx:id="ShowPassword" layoutX="361.0" layoutY="303.0" prefHeight="42.0" prefWidth="247.0" promptText="Password:" styleClass="textfield" stylesheets="@styles.css" visible="false" />
-            <CheckBox fx:id="cbBtn" layoutX="362.0" layoutY="371.0" mnemonicParsing="false" onAction="#showPassword" styleClass="textShow" stylesheets="@styles.css" text="Show password" textFill="WHITE">
+            <ImageView fitHeight="831.0" fitWidth="803.0" layoutX="97.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/pandabg2.png" />
+               </image></ImageView>
+            <Label layoutX="375.0" layoutY="798.0" styleClass="welcome-label" stylesheets="@chart.css" text="Welcome!" />
+            <Label alignment="CENTER" layoutX="180.0" layoutY="864.0" prefHeight="91.0" prefWidth="572.0" styleClass="intro-label" stylesheets="@chart.css" text="Step into a world of luck and luxury where the charm of pandas meets the thrill of gambling! At Panda Playhouse, we're dedicated to providing you with an unforgettable gaming experience filled with excitement, adventure, and big wins!" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+         </children></AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #27282A;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tfUsername" layoutX="303.0" layoutY="360.0" prefHeight="42.0" prefWidth="356.0" promptText="Username" styleClass="textfield" stylesheets="@styles.css" />
+            <Button fx:id="btnRegister" layoutX="300.0" layoutY="578.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="42.0" prefWidth="356.0" styleClass="btnShow" stylesheets="@styles.css" text="Login" />
+            <PasswordField fx:id="pfPassword" layoutX="302.0" layoutY="425.0" prefHeight="42.0" prefWidth="356.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="ShowPassword" layoutX="302.0" layoutY="425.0" prefHeight="42.0" prefWidth="356.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" visible="false" />
+            <CheckBox fx:id="cbBtn" layoutX="310.0" layoutY="490.0" mnemonicParsing="false" onAction="#showPassword" styleClass="textShow" stylesheets="@styles.css" text="Show password" textFill="WHITE">
                <font>
                   <Font name="Cambria" size="13.0" />
                </font></CheckBox>
-            <Text fill="GOLD" layoutX="390.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Signin Account" wrappingWidth="188.11669921875">
-               <font>
-                  <Font name="Cambria" size="27.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="403.0" layoutY="564.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have account?">
+            <Label layoutX="358.0" layoutY="744.0" styleClass="no-acc-label" stylesheets="@chart.css" text="Don't have an account?">
                <font>
                   <Font size="17.0" />
                </font>
-            </Text>
-            <Text fill="#b4abab" layoutX="342.0" layoutY="697.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright ©2024-2075 CasinoRoyale. All rights reserved." />
-            <Text fx:id="showIncorrect" fill="RED" layoutX="354.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect username/password" textAlignment="CENTER" visible="false" wrappingWidth="247.20000000000005">
+            </Label>
+            <Label layoutX="301.0" layoutY="1047.0" styleClass="details-label" stylesheets="@chart.css" text="Copyright ©2024-2075 PandaPlayhouse. All rights reserved." />
+            <Label fx:id="showIncorrect" alignment="CENTER" layoutX="301.0" layoutY="640.0" prefHeight="17.0" prefWidth="355.0" styleClass="incorrect-label" stylesheets="@chart.css" text="Incorrect username/password" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="Cambria Bold" size="18.0" />
                </font>
-            </Text>
-            <Text fx:id="showEmptyFields" fill="RED" layoutX="354.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please input the fields" textAlignment="CENTER" visible="false" wrappingWidth="247.20000000000005">
+            </Label>
+            <Label fx:id="showEmptyFields" alignment="CENTER" layoutX="301.0" layoutY="640.0" prefHeight="17.0" prefWidth="357.0" styleClass="incorrect-label" stylesheets="@chart.css" text="Please input the fields" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="Cambria Bold" size="18.0" />
                </font>
-            </Text>
+            </Label>
+            <Label alignment="CENTER" layoutX="341.0" layoutY="184.0" prefHeight="1.0" prefWidth="337.0" styleClass="logo-label" stylesheets="@chart.css" text="Panda Playhouse" textFill="#d7c62e">
+               <font>
+                  <Font name="Berlin Sans FB" size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="69.0" fitWidth="70.0" layoutX="296.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/panda-logo.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="393.0" layoutY="264.0" prefHeight="43.0" prefWidth="169.0" styleClass="login-label" stylesheets="@chart.css" text="Login" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="368.0" layoutY="316.0" prefHeight="17.0" prefWidth="246.0" styleClass="details-label" stylesheets="@chart.css" text="Welcome, please enter your log-in details" textFill="WHITE" />
+            <Label layoutX="534.0" layoutY="744.0" onMouseClicked="#handleRegister" styleClass="register-label" stylesheets="@chart.css" text="Register" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-   </children>
-</AnchorPane>
+   </right>
+
+</BorderPane>

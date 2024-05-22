@@ -1,5 +1,6 @@
 package com.example.casinoroyale;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +30,7 @@ public class SignInController {
     private PasswordField pfPassword;
 
     @FXML
-    private Text showIncorrect, showEmptyFields;
+    private Label showIncorrect, showEmptyFields;
 
     @FXML
     private CheckBox cbBtn;
@@ -95,6 +98,7 @@ public class SignInController {
         if (username.isEmpty() || password.isEmpty()) {
             showEmptyFields.setOpacity(1);
             showEmptyFields.setVisible(true);
+            hideAfterDelay(showEmptyFields);
             return;
         }
 
@@ -125,9 +129,19 @@ public class SignInController {
             }
             showIncorrect.setOpacity(1);
             showIncorrect.setVisible(true);
+            hideAfterDelay(showIncorrect);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void hideAfterDelay(Label text) {
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+        visiblePause.setOnFinished(event -> {
+            text.setOpacity(0);
+            text.setVisible(false);
+        });
+        visiblePause.play();
     }
 
     public void showPassword(){
@@ -142,7 +156,7 @@ public class SignInController {
         }
     }
 
-    public void handleRegister(ActionEvent actionEvent) {
+    public void handleRegister(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
             Parent root = loader.load();

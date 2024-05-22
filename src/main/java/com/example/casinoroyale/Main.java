@@ -10,19 +10,19 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("signin.fxml")));
 
         Scene scene = new Scene(root);
 
 
         primaryStage.setTitle("Sign In");
-
+        primaryStage.setFullScreen(true);
         primaryStage.setScene(scene);
-
         primaryStage.show();
     }
     public static void createTable() {

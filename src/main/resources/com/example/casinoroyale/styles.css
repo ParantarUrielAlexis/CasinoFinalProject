@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .root {
     -fx-background-color: black;
 }
@@ -18,30 +20,45 @@
 }
 
 .textfield {
+    -fx-font-family: 'Poppins';
     -fx-text-alignment: center;
-    -fx-background-color: transparent;
-    -fx-border-color: #ffd700;
-    -fx-border-width: .8px;
-    -fx-text-fill: #ffd700;
-    -fx-font-size: 16px;
-    -fx-prompt-text-fill: #ffd700;
+    -fx-background-color: #F0CF7B;
+    -fx-background-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+    -fx-text-fill: #2A2236;
+    -fx-font-size: 15px;
+    -fx-prompt-text-fill: #2A2236;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 0);
+
+    /* Add transition properties */
+    -fx-transition: all 0.8s ease-in-out;
+    -fx-transition-duration: 0.8s;
+    -fx-transition-property: background-color, border-color, background-radius, effect;
 }
 
 .textfield:focused {
-    -fx-background-color: transparent;
-    -fx-border-color: #ffd700;
-    -fx-border-width: .8px;
-    -fx-font-size: 16px;
+    -fx-background-color: #27282A;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #2A2236;
+    -fx-border-color: #F0CF7B;
+    -fx-border-width: 0.5px;
+    -fx-font-size: 15px;
     -fx-text-alignment: center;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0, 0, 0);
 }
 
 .textfield:focused .prompt-text {
-    -fx-text-fill: #ffd700;
-    -fx-border-color: #ffd700;
-    -fx-border-width: .8px;
-    -fx-font-size: 16px;
+    -fx-font-family: 'Poppins';
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #F0CF7B;
+    -fx-border-width: 1px;
+    -fx-font-size: 15px;
     -fx-text-alignment: center;
 }
+
 .btn2{
      -fx-background-color: #F62217;
         -fx-cursor: hand;
@@ -89,20 +106,37 @@
     -fx-text-fill: #000;
     -fx-font-style: italic;
 }
-.textShow{
+.textShow {
     -fx-text-fill: #fff;
-    -fx-font-style: italic;
-    -fx-font-family: Cambria;
+    -fx-font-family: 'Poppins';
     -fx-font-size: 14px;
-}
-.btnShow{
-    -fx-background-color: #000;
-    -fx-cursor: hand;
-    -fx-text-fill: #fff;
-    -fx-font-size: 14px;
-    -fx-font-family: Arial;
-    -fx-border-color: #FFD700;
-    -fx-border-width: 1px;
-    -fx-border-radius: 3px;
 }
 
+.check-box {
+    -fx-background-color: transparent; /* Make background transparent */
+}
+
+.check-box .box {
+    -fx-background-color: transparent; /* Make the box background transparent */
+    -fx-border-color: #f1dc66; /* Set the border color */
+    -fx-border-width: 1px; /* Set the border width */
+    -fx-padding: 2px; /* Adjust padding to ensure border is visible */
+}
+
+.check-box:selected .box {
+    -fx-background-color: #27282A; /* Background color when selected */
+}
+
+.check-box:selected .box .mark {
+    -fx-background-color: #f1dc66; /* Set the check mark background color */
+    -fx-border-color: #f1dc66; /* Ensure the border matches the check mark */
+    -fx-border-width: 1px; /* Adjust border width as necessary */
+}
+
+.btnShow {
+    -fx-background-color: #F0CF7B;
+    -fx-cursor: hand;
+    -fx-text-fill: #121314;
+    -fx-font-size: 12px;
+    -fx-font-family: 'Poppins';
+}
