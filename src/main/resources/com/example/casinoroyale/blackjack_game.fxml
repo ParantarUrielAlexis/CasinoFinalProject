@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.BlackjackGame">
+   <children>
+      <ImageView fx:id="ivBackground" fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../BlackJack/BACK.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelDealer" layoutY="44.0" opacity="0.0" prefHeight="36.0" prefWidth="326.0" text="Delear's Hand: " textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="34.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hbDealerHand" layoutY="97.0" prefHeight="238.0" prefWidth="1200.0">
+         <children>
+            <ImageView fx:id="ivHiddenCard" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand1" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand2" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand3" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand4" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand5" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDealerHand6" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets left="50.0" />
+         </padding>
+      </HBox>
+      <HBox layoutY="346.0" prefHeight="238.0" prefWidth="1200.0">
+         <children>
+            <ImageView fx:id="ivPlayerHand1" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand2" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand3" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand4" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand5" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand6" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivPlayerHand7" fitHeight="224.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets left="50.0" />
+         </padding>
+      </HBox>
+      <Label fx:id="labelPlayer" layoutX="6.0" layoutY="594.0" opacity="0.0" prefHeight="46.0" prefWidth="326.0" text="Player's Hand: " textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="34.0" />
+         </font>
+      </Label>
+      <HBox layoutY="679.0" prefHeight="46.0" prefWidth="1200.0">
+         <children>
+            <Label fx:id="labelStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="68.0" prefWidth="1206.0" text="Enter Bet amount to start a game." textFill="WHITE">
+               <font>
+                  <Font size="46.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button fx:id="btnPlayAgain" layoutX="531.0" layoutY="760.0" mnemonicParsing="false" onAction="#btnPlayAgainOnAction" prefHeight="46.0" prefWidth="140.0" text="Play Again" visible="false">
+         <font>
+            <Font name="Comic Sans MS" size="22.0" />
+         </font>
+      </Button>
+      <HBox fx:id="hbButtons" cache="true" layoutX="460.0" layoutY="807.0" prefHeight="46.0" prefWidth="360.0">
+         <children>
+            <Button fx:id="btnHit" disable="true" mnemonicParsing="false" onAction="#btnHitOnAction" prefHeight="50.0" prefWidth="70.0" text="Hit">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font name="Comic Sans MS" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnStay" disable="true" mnemonicParsing="false" onAction="#btnStayOnAction" prefHeight="50.0" prefWidth="70.0" text="Stay">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font></Button>
+         </children>
+         <padding>
+            <Insets left="75.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <VBox layoutY="788.0" prefHeight="112.0" prefWidth="300.0">
+         <children>
+            <Label prefHeight="55.0" prefWidth="300.0" text="Balance:" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBalance" prefHeight="71.0" prefWidth="301.0" textFill="#0a0606">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="42.0" />
+               </font>
+            </Label>
+         </children></VBox>
+      <HBox layoutX="451.0" layoutY="854.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="300.0">
+         <children>
+            <TextField fx:id="tfBet" prefHeight="46.0" prefWidth="219.0" promptText="Enter Bet Amount:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TextField>
+            <Button fx:id="btnBet" mnemonicParsing="false" onAction="#btnBetOnAction" prefHeight="46.0" prefWidth="56.0" text="BET" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="25.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>
