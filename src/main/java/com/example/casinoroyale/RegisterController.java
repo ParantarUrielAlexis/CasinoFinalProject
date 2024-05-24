@@ -1,15 +1,14 @@
 package com.example.casinoroyale;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,17 +41,7 @@ public class RegisterController {
         addPromptClearListeners(tfEmail, showEmpty);
         addPromptClearListeners(pfPassword, showEmpty);
 
-        tfUsername.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
-                showEmpty.setVisible(false);
-                showUsernameExists.setVisible(false);
-            }
-        });
-        tfFirstname.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
-                showEmpty.setVisible(false);
-            }
-        });
+        promptCheck(tfUsername, showUsernameExists, tfFirstname);
         tfLastname.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 showEmpty.setVisible(false);
@@ -63,13 +52,17 @@ public class RegisterController {
                 showEmpty.setVisible(false);
             }
         });
-        tfEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+        promptCheck(tfEmail, showEmailExists, pfPassword);
+    }
+
+    private void promptCheck(TextField tfUsername, Text showUsernameExists, TextField tfFirstname) {
+        tfUsername.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 showEmpty.setVisible(false);
-                showEmailExists.setVisible(false);
+                showUsernameExists.setVisible(false);
             }
         });
-        pfPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+        tfFirstname.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 showEmpty.setVisible(false);
             }
@@ -83,15 +76,6 @@ public class RegisterController {
             }
         });
     }
-
-    private void addPromptClearListeners(PasswordField passwordField, Label promptLabel) {
-        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.isEmpty()) {
-                promptLabel.setVisible(false);
-            }
-        });
-    }
-
 
     @FXML
     private void handleRegister() {
@@ -108,83 +92,78 @@ public class RegisterController {
             return;
         }
 
-        try (Connection connection = MySQLConnection.getConnection()) {
-            String checkUsernameQuery = "SELECT * FROM users WHERE username = ?";
-            try (PreparedStatement checkUsernameStatement = connection.prepareStatement(checkUsernameQuery)) {
-                checkUsernameStatement.setString(1, username);
-                ResultSet resultSet = checkUsernameStatement.executeQuery();
-                if (resultSet.next()) {
-                    showUsernameExists.setOpacity(1);
-                    showUsernameExists.setVisible(true);
-                    return;
-                }
+        try (Connection connection = SQLHelper.getConnection()) {
+            if (isUsernameExists(connection, username)) {
+                showUsernameExists.setOpacity(1);
+                showUsernameExists.setVisible(true);
+                return;
             }
 
-            String checkEmailQuery = "SELECT * FROM userprofile WHERE email = ?";
-            try (PreparedStatement checkEmailStatement = connection.prepareStatement(checkEmailQuery)) {
-                checkEmailStatement.setString(1, email);
-                ResultSet resultSet = checkEmailStatement.executeQuery();
-                if (resultSet.next()) {
-                    showEmailExists.setOpacity(1);
-                    showEmailExists.setVisible(true);
-                    return;
-                }
+            if (isEmailExists(connection, email)) {
+                showEmailExists.setOpacity(1);
+                showEmailExists.setVisible(true);
+                return;
             }
 
-            String insertUserQuery = "INSERT INTO users (username, password, balance) VALUES (?, ?, 0)";
-            try (PreparedStatement insertUserStatement = connection.prepareStatement(insertUserQuery, Statement.RETURN_GENERATED_KEYS)) {
-                insertUserStatement.setString(1, username);
-                insertUserStatement.setString(2, password);
-                int rowsInserted = insertUserStatement.executeUpdate();
-                if (rowsInserted > 0) {
-                    ResultSet generatedKeys = insertUserStatement.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        int userId = generatedKeys.getInt(1);
-                        String insertProfileQuery = "INSERT INTO userprofile (firstname, lastname, gender, email, user_id) VALUES (?, ?, ?, ?, ?)";
-                        try (PreparedStatement insertProfileStatement = connection.prepareStatement(insertProfileQuery)) {
-                            insertProfileStatement.setString(1, firstname);
-                            insertProfileStatement.setString(2, lastname);
-                            insertProfileStatement.setString(3, gender);
-                            insertProfileStatement.setString(4, email);
-                            insertProfileStatement.setInt(5, userId);
-                            int profileRowsInserted = insertProfileStatement.executeUpdate();
-                            if (profileRowsInserted > 0) {
-                                showRegistered.setOpacity(1);
-                                showRegistered.setVisible(true);
-                                tfUsername.clear();
-                                pfPassword.clear();
-                                tfFirstname.clear();
-                                tfLastname.clear();
-                                tfGender.clear();
-                                tfEmail.clear();
-                            } else {
-                                showFailedMessage.setOpacity(1);
-                                showFailedMessage.setVisible(true);
-                            }
-                        }
-                    }
-                } else {
-                    showFailedMessage.setOpacity(1);
-                    showFailedMessage.setVisible(true);
-                }
+            int userId = SQLHelper.insertUser(connection, username, password);
+            if (userId > 0 && SQLHelper.insertUserProfile(connection, userId, firstname, lastname, gender, email)) {
+                showRegistered.setOpacity(1);
+                showRegistered.setVisible(true);
+                clearForm();
+            } else {
+                showFailedMessage.setOpacity(1);
+                showFailedMessage.setVisible(true);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void showPassword(){
-        if(cbBtn.isSelected()){
-            ShowPassword.setText(pfPassword.getText());
-            ShowPassword.setVisible(true);
+
+    private boolean isUsernameExists(Connection connection, String username) throws SQLException {
+        String query = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        }
+    }
+
+    private boolean isEmailExists(Connection connection, String email) throws SQLException {
+        String query = "SELECT * FROM userprofile WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        }
+    }
+
+    private void clearForm() {
+        tfUsername.clear();
+        pfPassword.clear();
+        tfFirstname.clear();
+        tfLastname.clear();
+        tfGender.clear();
+        tfEmail.clear();
+    }
+
+    public void showPassword() {
+        checkBoxSelect(cbBtn, ShowPassword, pfPassword);
+    }
+
+    static void checkBoxSelect(CheckBox cbBtn, TextField showPassword, PasswordField pfPassword) {
+        if (cbBtn.isSelected()) {
+            showPassword.setText(pfPassword.getText());
+            showPassword.setVisible(true);
             pfPassword.setVisible(false);
         } else {
-            pfPassword.setText(ShowPassword.getText());
-            ShowPassword.setVisible(false);
+            pfPassword.setText(showPassword.getText());
+            showPassword.setVisible(false);
             pfPassword.setVisible(true);
         }
     }
 
-    public void handleSignIn(ActionEvent actionEvent) {
+    public void handleSignIn(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
             Parent root = loader.load();
@@ -200,5 +179,4 @@ public class RegisterController {
             e.printStackTrace();
         }
     }
-
 }

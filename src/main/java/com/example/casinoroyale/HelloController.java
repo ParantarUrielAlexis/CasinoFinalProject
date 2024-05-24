@@ -29,8 +29,8 @@ import java.sql.Statement;
 import java.util.Objects;
 
 public class HelloController {
-    private double originalWidth = 462.0;
-    private double originalHeight = 701.0;
+    private static double originalWidth = 462.0;
+    private static double originalHeight = 701.0;
 
     private int userId;
 
@@ -44,7 +44,7 @@ public class HelloController {
         music();
 
         // code for user balance
-        try (Connection c = MySQLConnection.getConnection();
+        try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
 
             String selectQuery = "SELECT * FROM users where id = " + userId;
@@ -175,7 +175,7 @@ public class HelloController {
     }
 
     // Method to adjust the anchor pane to stay in the middle
-    private void adjustAnchorPane(Stage stage, Parent root) {
+    static void adjustAnchorPane(Stage stage, Parent root) {
         double screenWidth = stage.getWidth();
         double screenHeight = stage.getHeight();
 
@@ -195,18 +195,7 @@ public class HelloController {
     public void onSlotMachineBTNClick(ActionEvent event) throws IOException {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SlotMachine.fxml")));
-            double dpiScale = Main.DPIUtil.getDPIScale();
-
-            Scale scale = new Scale(dpiScale, dpiScale);
-            root.getTransforms().add(scale);
-
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.show();
-
+            SlotMachine.getDPI(event, root);
 
 
         } catch (IOException e) {
@@ -239,8 +228,7 @@ public class HelloController {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("deposit.fxml"));
             Parent root = loader.load();
-
-            // Get the DepositController and pass the userId to it
+            
             DepositController depositController = loader.getController();
             depositController.initialize(userId);
 
@@ -258,19 +246,6 @@ public class HelloController {
             // Handle any IOException that occurs during loading
             e.printStackTrace();
             // You might want to show an error message to the user here
-        }
-    }
-
-    public static class DPIUtil {
-        public static double getDPIScale() {
-            double dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-            double defaultDPI = 96.0; // Default DPI for most systems
-
-            if (dpi == 120) {
-                defaultDPI = 150;
-            }
-            System.out.println(dpi);
-            return dpi / defaultDPI;
         }
     }
 }

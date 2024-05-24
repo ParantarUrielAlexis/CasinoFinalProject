@@ -102,7 +102,7 @@ public class SignInController {
             return;
         }
 
-        try (Connection c = MySQLConnection.getConnection();
+        try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
             String selectQuery = "SELECT * FROM users";
             ResultSet result = statement.executeQuery(selectQuery);
@@ -145,20 +145,13 @@ public class SignInController {
     }
 
     public void showPassword(){
-        if(cbBtn.isSelected()){
-            ShowPassword.setText(pfPassword.getText());
-            ShowPassword.setVisible(true);
-            pfPassword.setVisible(false);
-        } else {
-            pfPassword.setText(ShowPassword.getText());
-            ShowPassword.setVisible(false);
-            pfPassword.setVisible(true);
-        }
+        RegisterController.checkBoxSelect(cbBtn, ShowPassword, pfPassword);
     }
 
     public void handleRegister(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
+
             Parent root = loader.load();
 
             Scene scene = new Scene(root);

@@ -678,45 +678,9 @@ public class HiloController {
         mediaPlayer.play();
     }
     private void updateUserBalanceInDatabase() {
-        try (Connection c = MySQLConnection.getConnection();
-             PreparedStatement preparedStatement = c.prepareStatement("UPDATE users SET balance = ? WHERE id = ?")) {
-
-            // Get the user ID from the SignInController
-            int userId = SignInController.getUserId();
-
-            // Set the balance and user ID parameters in the SQL query
-            preparedStatement.setDouble(1, userBalance);
-            preparedStatement.setInt(2, userId);
-
-            // Execute the update
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        SQLHelper.updateBalance(SignInController.getUserId(), userBalance);
     }
     private double retrieveUserBalance() {
-        double userBalance = -1; // Default value in case of error
-        try (Connection c = MySQLConnection.getConnection();
-             PreparedStatement preparedStatement = c.prepareStatement("SELECT balance FROM users WHERE id = ?")) {
-
-            // Get the user ID from the SignInController
-            int userId = SignInController.getUserId();
-
-            // Set the user ID parameter in the SQL query
-            preparedStatement.setInt(1, userId);
-
-            // Execute the query and get the result set
-            ResultSet result = preparedStatement.executeQuery();
-
-            // Check if a result is returned and get the balance
-            if (result.next()) {
-                userBalance = result.getDouble("balance"); // Retrieve the balance as double
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userBalance;
+        return SQLHelper.getBalance(SignInController.getUserId());
     }
 }

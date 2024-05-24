@@ -79,7 +79,7 @@ public class DashboardController {
     }
 
     private void populateTable() {
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             String selectQuery = "SELECT u.id, u.username, u.password, p.firstname, p.lastname, p.gender, p.email " +
                     "FROM users u " +
                     "INNER JOIN userprofile p ON u.id = p.user_id";
@@ -130,7 +130,7 @@ public class DashboardController {
 
                 if (emailResult.isPresent()) {
                     String newEmail = emailResult.get();
-                    try (Connection connection = MySQLConnection.getConnection()) {
+                    try (Connection connection = SQLHelper.getConnection()) {
                         connection.setAutoCommit(false);
                         String updatePasswordQuery = "UPDATE users SET password = ? WHERE id = ?";
                         try (PreparedStatement passwordStatement = connection.prepareStatement(updatePasswordQuery)) {
@@ -179,7 +179,7 @@ public class DashboardController {
 
             confirmationDialog.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    try (Connection connection = MySQLConnection.getConnection()) {
+                    try (Connection connection = SQLHelper.getConnection()) {
                         connection.setAutoCommit(false);
                         String deleteProfileQuery = "DELETE FROM userprofile WHERE user_id = ?";
                         try (PreparedStatement profileStatement = connection.prepareStatement(deleteProfileQuery)) {
@@ -216,17 +216,7 @@ public class DashboardController {
 
     @FXML
     public void handleLogOut(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Sign In");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SQLHelper.goToSignIn(actionEvent);
     }
 
     @FXML
@@ -278,7 +268,7 @@ public class DashboardController {
 
         Optional<Admin> result = dialog.showAndWait();
         result.ifPresent(newUser -> {
-            try (Connection connection = MySQLConnection.getConnection()) {
+            try (Connection connection = SQLHelper.getConnection()) {
                 String insertUserQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
                 try (PreparedStatement userStatement = connection.prepareStatement(insertUserQuery, Statement.RETURN_GENERATED_KEYS)) {
                     userStatement.setString(1, newUser.getUsername());
@@ -317,5 +307,7 @@ public class DashboardController {
             }
         });
     }
+
+
 
 }

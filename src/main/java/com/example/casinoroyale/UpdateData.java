@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class UpdateData {
     public static void main(String[] args) {
-        try (Connection c = MySQLConnection.getConnection();
+        try (Connection c = SQLHelper.getConnection();
              PreparedStatement preparedStatement = c.prepareStatement(
                      "UPDATE users SET name = ?, email = ? WHERE id = ?")) {
             String newName = "Manuel Gonzalez";

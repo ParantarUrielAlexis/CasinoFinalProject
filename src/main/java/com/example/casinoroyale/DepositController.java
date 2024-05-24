@@ -62,7 +62,7 @@ public class DepositController {
         double depositAmount = Double.parseDouble(deposit_id.getText());
 
         // Connect to the database
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             // Update the user's balance in the database
             String updateBalanceQuery = "UPDATE users SET balance = balance + ? WHERE id = ?";
             try (PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery)) {
@@ -94,7 +94,7 @@ public class DepositController {
         double withdrawAmount = Double.parseDouble(withdraw_id.getText());
 
         // Connect to the database
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             // Check if the withdrawal amount is valid
             if (withdrawAmount <= 0) {
                 System.out.println("Invalid withdrawal amount");
@@ -146,7 +146,7 @@ public class DepositController {
     }
 
     private void updateBalance() {
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             // Retrieve the current balance from the database
             String getBalanceQuery = "SELECT balance FROM users WHERE id = ?";
             try (PreparedStatement getBalanceStatement = connection.prepareStatement(getBalanceQuery)) {

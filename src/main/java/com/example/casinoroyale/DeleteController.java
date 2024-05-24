@@ -32,7 +32,7 @@ public class DeleteController {
             return;
         }
 
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             String selectQuery = "SELECT * FROM users WHERE username = ?";
             try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
                 selectStatement.setString(1, usernameToDelete);

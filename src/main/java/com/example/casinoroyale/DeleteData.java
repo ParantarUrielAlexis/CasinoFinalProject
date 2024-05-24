@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DeleteData {
     public static void main(String[] args) {
-        try (Connection c = MySQLConnection.getConnection();
+        try (Connection c = SQLHelper.getConnection();
              PreparedStatement preparedStatement = c.prepareStatement(
                      "DELETE FROM users WHERE id = ?")) {
 

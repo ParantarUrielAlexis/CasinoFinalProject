@@ -46,7 +46,7 @@ public class EditController {
             return;
         }
 
-        try (Connection connection = MySQLConnection.getConnection()) {
+        try (Connection connection = SQLHelper.getConnection()) {
             String updateQuery = "UPDATE users SET username = ?, password = ? WHERE username = ? AND password = ?";
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
                 statement.setString(1, newUsername);

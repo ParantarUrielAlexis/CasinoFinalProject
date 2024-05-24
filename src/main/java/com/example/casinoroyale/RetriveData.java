@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class RetriveData {
     public static void main(String[] args) {
-        try(Connection c = MySQLConnection.getConnection();
+        try(Connection c = SQLHelper.getConnection();
             Statement statement = c.createStatement()){
             String selectQuery = "SELECT * FROM users";
             ResultSet result = statement.executeQuery(selectQuery);

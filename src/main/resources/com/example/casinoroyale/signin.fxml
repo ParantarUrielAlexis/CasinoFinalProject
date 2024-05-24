@@ -9,11 +9,11 @@
    <left>
       <AnchorPane prefHeight="1080.0" prefWidth="961.0" style="-fx-background-color: #F0CF7B;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="831.0" fitWidth="803.0" layoutX="97.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="125.33331298828125" AnchorPane.topAnchor="109.0">
+            <ImageView fitHeight="831.0" fitWidth="803.0" layoutX="97.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../backgrounds/pandabg2.png" />
                </image></ImageView>
-            <Label layoutX="375.0" layoutY="798.0" styleClass="welcome-label" stylesheets="@chart.css" text="Welcome!" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="798.0" />
+            <Label layoutX="375.0" layoutY="798.0" styleClass="welcome-label" stylesheets="@chart.css" text="Welcome!" />
             <Label alignment="CENTER" layoutX="180.0" layoutY="864.0" prefHeight="91.0" prefWidth="572.0" styleClass="intro-label" stylesheets="@chart.css" text="Step into a world of luck and luxury where the charm of pandas meets the thrill of gambling! At Panda Playhouse, we're dedicated to providing you with an unforgettable gaming experience filled with excitement, adventure, and big wins!" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
          </children></AnchorPane>
    </left>
@@ -33,7 +33,7 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="301.0" layoutY="1047.0" styleClass="details-label" stylesheets="@chart.css" text="Copyright ©2024-2075 PandaPlayhouse. All rights reserved." />
+            <Label layoutX="301.0" layoutY="1047.0" styleClass="details-label" stylesheets="@chart.css" text="Copyright ©2024-2075 PandaHaven. All rights reserved." />
             <Label fx:id="showIncorrect" alignment="CENTER" layoutX="301.0" layoutY="640.0" prefHeight="17.0" prefWidth="355.0" styleClass="incorrect-label" stylesheets="@chart.css" text="Incorrect username/password" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="Cambria Bold" size="18.0" />
@@ -44,7 +44,7 @@
                   <Font name="Cambria Bold" size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="341.0" layoutY="184.0" prefHeight="1.0" prefWidth="337.0" styleClass="logo-label" stylesheets="@chart.css" text="Panda Playhouse" textFill="#d7c62e">
+            <Label alignment="CENTER" layoutX="341.0" layoutY="184.0" prefHeight="43.0" prefWidth="291.0" styleClass="logo-label" stylesheets="@chart.css" text="Panda Haven" textFill="#d7c62e">
                <font>
                   <Font name="Berlin Sans FB" size="26.0" />
                </font>

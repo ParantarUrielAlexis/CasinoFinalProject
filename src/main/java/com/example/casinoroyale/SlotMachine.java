@@ -212,26 +212,29 @@ public class SlotMachine implements Initializable {
         pauseTransition.play();
     }
 
-    public void onBackClick(ActionEvent actionEvent) {
+    public void onBackClick(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
-            double dpiScale = Main.DPIUtil.getDPIScale();
-
-            Scale scale = new Scale(dpiScale, dpiScale);
-            root.getTransforms().add(scale);
-
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.show();
-
+            getDPI(event, root);
 
 
         } catch (IOException e) {
             System.err.println("Error loading FXML file: " + e.getMessage());
         }
+    }
+
+    static void getDPI(ActionEvent event, Parent root) {
+        double dpiScale = ScreenHelper.getDPIScale();
+
+        Scale scale = new Scale(dpiScale, dpiScale);
+        root.getTransforms().add(scale);
+
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
     }
 
     public void SMmusic() {
