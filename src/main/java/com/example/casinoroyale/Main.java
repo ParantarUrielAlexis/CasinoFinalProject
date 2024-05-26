@@ -26,6 +26,12 @@ public class Main extends Application {
         primaryStage.setTitle("Sign In");
         primaryStage.setFullScreen(true);
         primaryStage.setScene(scene);
+
+        // Disable the full screen exit hint
+        primaryStage.setFullScreenExitHint("");
+        // Disable the full screen exit key
+//        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
         primaryStage.show();
     }
 

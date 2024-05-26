@@ -32,26 +32,26 @@
       </HBox>
       <AnchorPane layoutX="509.0" layoutY="205.0" prefHeight="670.0" prefWidth="902.0">
          <children>
-            <Text layoutX="139.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deposit">
+            <Text layoutX="138.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deposit">
                <font>
-                  <Font name="Times New Roman" size="60.0" />
+                  <Font name="Poppins Regular" size="50.0" />
                </font>
             </Text>
-            <Text layoutX="519.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Withdraw">
+            <Text layoutX="520.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Withdraw">
                <font>
-                  <Font name="Times New Roman" size="60.0" />
+                  <Font name="Poppins Regular" size="50.0" />
                </font>
             </Text>
             <HBox layoutX="10.0" layoutY="81.0" prefHeight="93.0" prefWidth="884.0" style="-fx-font-family: 'Poppins';                 -fx-font-size: 20px;                 -fx-font-weight: 800;                 -fx-font-style: normal;                 -fx-text-fill: white;                 -fx-label-padding: 8px;                 -fx-background-color: black;                 -fx-background-radius: 10px;">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" wrappingWidth="321.8134765625">
                      <font>
-                        <Font name="Times New Roman Bold" size="80.0" />
+                        <Font name="Poppins Bold" size="65.0" />
                      </font>
                   </Text>
                   <Text fx:id="balanceID" boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textOrigin="CENTER" wrappingWidth="556.38671875">
                      <font>
-                        <Font name="Times New Roman" size="80.0" />
+                        <Font name="Poppins Regular" size="70.0" />
                      </font>
                      <HBox.margin>
                         <Insets />
@@ -59,24 +59,24 @@
                   </Text>
                </children>
             </HBox>
-            <TextField fx:id="deposit_id" layoutX="125.0" layoutY="335.0" onAction="#depositMoney" prefHeight="50.0" prefWidth="215.0" promptText="Enter amount">
+            <TextField fx:id="deposit_id" layoutX="125.0" layoutY="335.0" onAction="#depositMoney" prefHeight="50.0" prefWidth="215.0" promptText="Enter amount" style="-fx-background-color: #FFEEC1; -fx-font-family: Poppins;">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Poppins Regular" size="27.0" />
                </font>
             </TextField>
-            <TextField fx:id="withdraw_id" layoutX="531.0" layoutY="335.0" onAction="#withdrawMoney" prefHeight="50.0" prefWidth="215.0" promptText="Enter amount">
+            <TextField fx:id="withdraw_id" layoutX="532.0" layoutY="335.0" onAction="#withdrawMoney" prefHeight="50.0" prefWidth="215.0" promptText="Enter amount" style="-fx-background-color: #FFEEC1; -fx-font-family: Poppins;">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Poppins Regular" size="27.0" />
                </font>
             </TextField>
-            <Button fx:id="btnDeposit" layoutX="165.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleDeposit" text="Deposit">
+            <Button fx:id="btnDeposit" layoutX="165.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleDeposit" style="-fx-background-color: #27282A;" text="Deposit" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="30.0" />
+                  <Font name="Poppins Regular" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btnWithdraw" layoutX="559.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleWithdraw" text="Withdraw">
+            <Button fx:id="btnWithdraw" layoutX="559.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleWithdraw" style="-fx-background-color: #27282A;" text="Withdraw" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="30.0" />
+                  <Font name="Poppins Regular" size="24.0" />
                </font>
             </Button>
          </children>

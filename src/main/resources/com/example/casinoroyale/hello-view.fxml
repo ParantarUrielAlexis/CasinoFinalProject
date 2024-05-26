@@ -20,12 +20,12 @@
                   <Image url="@../../../backgrounds/panda-logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="1864.0" layoutY="20.0" prefHeight="46.0" prefWidth="29.0" text="X" textFill="WHITE">
+            <Label layoutX="1864.0" layoutY="20.0" onMouseClicked="#exitOnClick" prefHeight="46.0" prefWidth="29.0" text="X" textFill="WHITE">
                <font>
                   <Font name="Poppins Bold" size="33.0" />
                </font>
             </Label>
-            <ImageView fitHeight="41.0" fitWidth="37.0" layoutX="1804.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="41.0" fitWidth="37.0" layoutX="1804.0" layoutY="25.0" onMouseClicked="#logOutOnClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../backgrounds/log-out.png" />
                </image>

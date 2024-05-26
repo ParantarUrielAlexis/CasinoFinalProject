@@ -1,14 +1,21 @@
 package com.example.casinoroyale;
 
+
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
@@ -17,16 +24,24 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
 public class CrashController {
-
+    @FXML
+    public ImageView mainMenuButton;
     @FXML
     private Label currentLabel;
     @FXML
@@ -51,7 +66,6 @@ public class CrashController {
     private Label multiplierLabel;
 
     private double currentMultiplier = 0.0;
-    private Timeline timeline;
     private boolean isCrashed = false;
     private final Random random = new Random();
     private double cashOutMultiplier = 0;
@@ -62,21 +76,24 @@ public class CrashController {
     private int time = 0;
     private final AudioClip boom = new AudioClip(Objects.requireNonNull(getClass().getResource("/background_musics/boom.mp3")).toString());
     private final AudioClip cashout = new AudioClip(Objects.requireNonNull(getClass().getResource("/background_musics/cashoutSound.mp3")).toString());
+    private final AudioClip crashMusic = new AudioClip(Objects.requireNonNull(getClass().getResource("/background_musics/crash-music.mp3")).toString());
+    private final AudioClip multBeep = new AudioClip(Objects.requireNonNull(getClass().getResource("/background_musics/multiplier-beep.mp3")).toString());
 
     private final List<Label> multiplierLabels = new ArrayList<>();
     private double nextPulseThreshold = 0.5;
+    private boolean gameInProgress = false;
+    private ScheduledExecutorService executorService;
 
     @FXML
     public void initialize() {
-        // Initialize user balance
+        crashMusic.setCycleCount(AudioClip.INDEFINITE);
+        crashMusic.play();
         userBalance = retrieveUserBalance();
 
-        // Use the userBalance variable as needed
         if (userBalance != -1) {
             System.out.println("User Balance: " + userBalance);
         }
 
-        // Other initialization code
         initializeChart();
         initializeTextFormatters();
         series = new XYChart.Series<>();
@@ -146,6 +163,7 @@ public class CrashController {
                 return;
             }
 
+            crashMusic.stop();
             userBalance -= betAmount;
             balanceLabel.setText("₱" + String.format("%.2f", userBalance));
             updateUserBalanceInDatabase();
@@ -160,15 +178,23 @@ public class CrashController {
             series.getData().clear();
             currentMultiplier = 0.0;
 
-            timeline = new Timeline(new KeyFrame(Duration.millis(50), e -> {
-                autoCashOutTF.setDisable(true);
-                if (!isCrashed) {
-                    updateGame();
-                }
-            }));
-            timeline.setCycleCount(Animation.INDEFINITE);
-            timeline.play();
+            gameInProgress = true;
+            mainMenuButton.setDisable(true);
+
+            startGameLoop();
         });
+    }
+
+    private void startGameLoop() {
+        executorService = Executors.newScheduledThreadPool(1);
+
+        Runnable gameTask = () -> {
+            if (!isCrashed) {
+                Platform.runLater(this::updateGame);
+            }
+        };
+
+        executorService.scheduleAtFixedRate(gameTask, 0, 50, TimeUnit.MILLISECONDS);
     }
 
     private void updateGame() {
@@ -203,7 +229,10 @@ public class CrashController {
 
     private void handleCrash() {
         isCrashed = true;
-        timeline.stop();
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+        crashMusic.stop();
         boom.play();
         cashOutMultiplier = 1.0;
 
@@ -212,11 +241,19 @@ public class CrashController {
         restartButton.setVisible(true);
         restartButton.setDisable(false);
 
+        gameInProgress = false;
+        mainMenuButton.setDisable(false);
+
         updateMultiplierLabels(currentMultiplier);
         updateUserBalanceInDatabase();
+
+        crashMusic.setCycleCount(AudioClip.INDEFINITE);
+        crashMusic.play();
     }
 
     private double getMultiplierIncrement(double multiplier) {
+        multBeep.play();
+
         if (multiplier >= 8) return 0.1;
         if (multiplier >= 6) return 0.09;
         if (multiplier >= 4.5) return 0.09;
@@ -275,7 +312,7 @@ public class CrashController {
     @FXML
     public void cashOutOnAction(ActionEvent ignoredEvent) {
         pulseButton(cashOutButton, () -> {
-            if (!isCrashed && timeline != null && !cashedOut) {
+            if (!isCrashed && executorService != null && !cashedOut) {
                 cashout.play();
                 cashOutMultiplier = currentMultiplier;
 
@@ -293,12 +330,14 @@ public class CrashController {
                 autoCashOutTF.setDisable(false);
 
                 updateUserBalanceInDatabase();
+
+                crashMusic.setCycleCount(AudioClip.INDEFINITE);
+                crashMusic.play();
             }
         });
     }
 
     public void halfBetOnAction(MouseEvent ignoredEvent) {
-        // Get the current bet amount from the text field
         String betAmountText = betAmountTF.getText().trim().replace("₱", "");
         try {
             betAmount = Double.parseDouble(betAmountText);
@@ -306,16 +345,13 @@ public class CrashController {
             System.err.println("Invalid bet amount: " + betAmountText);
             return;
         }
-        // Halve the bet amount
         betAmount /= 2;
-        // Update the text field with the new bet amount
         betAmountTF.setText("₱" + String.format("%.2f", betAmount));
     }
 
     public void doubleBetOnAction(MouseEvent ignoredEvent) {
         if (userBalance <= betAmount) return;
 
-        // Get the current bet amount from the text field
         String betAmountText = betAmountTF.getText().trim().replace("₱", "");
         try {
             betAmount = Double.parseDouble(betAmountText);
@@ -324,16 +360,12 @@ public class CrashController {
             return;
         }
 
-        // Double the bet amount
         betAmount *= 2;
-        // Update the text field with the new bet amount
         betAmountTF.setText("₱" + String.format("%.2f", betAmount));
     }
 
     public void maxBetOnAction(MouseEvent ignoredEvent) {
-        // Set betAmount to userBalance
         betAmount = userBalance;
-        // Update the text field with the new bet amount
         betAmountTF.setText("₱" + String.format("%.2f", betAmount));
     }
 
@@ -384,6 +416,27 @@ public class CrashController {
     private void updateUserBalanceInDatabase() {
         SQLHelper.updateBalance(SignInController.getUserId(), userBalance);
     }
+
+    public void goToMain(MouseEvent event) {
+        if (gameInProgress) {
+            return;
+        }
+
+        crashMusic.stop();
+
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+            double dpiScale = ScreenHelper.getDPIScale();
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+            Scene scene = new Scene(root);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setTitle("Sign In");
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
-
-

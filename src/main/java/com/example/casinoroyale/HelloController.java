@@ -1,5 +1,6 @@
 package com.example.casinoroyale;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.ActionEvent;
@@ -8,9 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
+import java.util.Optional;
 
 public class HelloController {
     private static double originalWidth = 462.0;
@@ -39,6 +42,7 @@ public class HelloController {
     @FXML
     public Button btnBlackJack;
     private int userId;
+    MediaPlayer mediaPlayer;
 
     public void initialize() {
         this.userId = SignInController.getUserId();
@@ -178,6 +182,7 @@ public class HelloController {
     private void showSplashScreen(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("splash-view.fxml"));
+
             Pane splashPane = loader.load();
             Scene splashScene = new Scene(splashPane, 1920, 1080);
             splashScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
@@ -238,7 +243,9 @@ public class HelloController {
             throw new RuntimeException("Main screen did not load", e);
         }
     }
-    
+
+
+
 
 
     // Method to adjust the anchor pane to stay in the middle
@@ -271,9 +278,74 @@ public class HelloController {
 
     }
 
+    private void showMainScreenBlackJack(Stage primaryStage) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("blackjack_main.fxml")));
+
+            // Calculate the DPI scaling factor
+            double dpiScale = ScreenHelper.getDPIScale();
+
+            // Apply the scaling transformation
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
+            Scene scene = new Scene(root, 1920, 1080);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+        } catch (Exception e) {
+            throw new RuntimeException("Main screen did not load", e);
+        }
+    }
+    private void showSplashScreenBlackJack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("splash-view.fxml"));
+            Pane splashPane = loader.load();
+            Scene splashScene = new Scene(splashPane, 1920, 1080);
+            splashScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
+
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setScene(splashScene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+
+            // Get the MediaView from the FXML
+            MediaView splashMediaView = (MediaView) splashPane.lookup("#splashMediaView");
+            ProgressBar progressBar = (ProgressBar) splashPane.lookup("#progressBar");
+
+            // Load and play the video
+            String videoPath = Objects.requireNonNull(getClass().getResource("/background/BlackJack.mp4")).toExternalForm();
+            Media media = new Media(videoPath);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            splashMediaView.setMediaPlayer(mediaPlayer);
+
+            // Wait until the media is ready before binding the progress bar
+            mediaPlayer.statusProperty().addListener((obs, oldStatus, newStatus) -> {
+                if (newStatus == MediaPlayer.Status.READY) {
+                    ReadOnlyObjectProperty<Duration> durationProperty = mediaPlayer.totalDurationProperty();
+                    progressBar.progressProperty().bind(
+                            Bindings.createDoubleBinding(
+                                    () -> mediaPlayer.getCurrentTime().toMillis() / durationProperty.get().toMillis(),
+                                    mediaPlayer.currentTimeProperty(),
+                                    durationProperty
+                            )
+                    );
+                }
+            });
+
+            mediaPlayer.setOnEndOfMedia(() -> showMainScreenBlackJack(primaryStage));
+            mediaPlayer.play();
+        } catch (Exception e) {
+            throw new RuntimeException("Splash screen did not load", e);
+        }
+    }
+
+
     @FXML
     public void btnBlackJackOnAction(ActionEvent event) {
-        // code for user balance
+        showSplashScreenBlackJack(event);
+        BlackJackBackGround();
         try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
 
@@ -287,42 +359,15 @@ public class HelloController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        if (mediaPlayer == null || !mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-            // Start the music only if the media player is not playing
-            BlackJackBackGround();
-        }
-
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("blackjack_main.fxml")));
-            SlotMachine.getDPI(event, root);
-
-        } catch (IOException e) {
-            // Handle any IOException that occurs during loading
-            e.printStackTrace();
+            // Handle database errors appropriately
         }
     }
 
-
-
-
-    MediaPlayer mediaPlayer;
-
-
-
     public void BlackJackBackGround() {
-        String musicFilePath = "src/main/resources/background_musics/blackjack_background.mp3";
+        String musicFilePath = "src/main/resources/background_musics/blackjack_main.mp3";
         Media h = new Media(Paths.get(musicFilePath).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
 
-        // Add event handler for end of media
-        mediaPlayer.setOnEndOfMedia(() -> {
-            // Rewind the media to the beginning
-            mediaPlayer.seek(Duration.ZERO);
-            // Play the media again
-            mediaPlayer.play();
-        });
 
         mediaPlayer.play();
     }
@@ -352,5 +397,43 @@ public class HelloController {
             e.printStackTrace();
             // You might want to show an error message to the user here
         }
+    }
+
+    public void logOutOnClick(MouseEvent event) {
+        try {
+            System.out.println("pressed log out");
+
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
+            Parent root = loader.load();
+
+            // Calculate the DPI scaling factor
+            double dpiScale = ScreenHelper.getDPIScale();
+            // Apply the scaling transformation
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
+            // Create a new scene with the loaded FXML file
+            Scene scene = new Scene(root);
+
+            // Get the stage from the event source
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the scene on the primary stage
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Transaction");
+            primaryStage.show();
+
+            // Set the stage to full screen
+            primaryStage.setFullScreen(true);
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+            // You might want to show an error message to the user here
+        }
+    }
+
+    public void exitOnClick() {
+        SignInController.exit();
     }
 }
