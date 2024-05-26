@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.SlotMachine">
    <children>
@@ -12,7 +13,7 @@
          <children>
             <ImageView fitHeight="1080.0" fitWidth="1920.0" focusTraversable="true" pickOnBounds="true">
                <image>
-                  <Image url="@../../../SlotMachine/SlotMachine.png" />
+                  <Image url="@../../../SlotMachine/SMBackground.png" />
                </image>
                <viewport>
                   <Rectangle2D />
@@ -30,7 +31,7 @@
                <graphic>
                   <ImageView fitHeight="82.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../SlotMachine/SlotBTN.png" />
+                        <Image url="@../../../SlotMachine/Spin.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -46,7 +47,7 @@
                <image>
                   <Image url="@../../../SlotMachine/1.png" />
                </image></ImageView>
-            <Button layoutX="419.0" layoutY="833.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0">
+            <Button layoutX="419.0" layoutY="833.0" mnemonicParsing="false" onAction="#TopUpBTN" prefHeight="41.0" prefWidth="105.0">
                <graphic>
                   <ImageView fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,7 +65,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="1240.0" layoutY="840.0" mnemonicParsing="false">
+            <Button layoutX="1166.0" layoutY="840.0" mnemonicParsing="false" onAction="#PlusBet" stylesheets="@chart.css">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -72,7 +73,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="1240.0" layoutY="882.0" mnemonicParsing="false">
+            <Button layoutX="1166.0" layoutY="882.0" mnemonicParsing="false" onAction="#MinusBet">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -80,7 +81,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="1240.0" layoutY="925.0" mnemonicParsing="false">
+            <Button layoutX="1166.0" layoutY="926.0" mnemonicParsing="false" onAction="#MaxBet">
                <graphic>
                   <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -88,7 +89,26 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <TextArea layoutX="1362.0" layoutY="860.0" prefHeight="81.0" prefWidth="129.0" />
+            <Label layoutX="595.0" layoutY="881.0" prefHeight="23.0" prefWidth="64.0" scaleX="2.0" scaleY="2.0" text="Balance:">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="Balance" layoutX="695.0" layoutY="880.0" scaleX="2.0" scaleY="2.0">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="1276.0" layoutY="868.0" prefHeight="51.0" prefWidth="102.0" text="Total:">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
+            <Label fx:id="Total" layoutX="1371.0" layoutY="868.0" prefHeight="51.0" prefWidth="163.0">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

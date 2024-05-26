@@ -49,7 +49,6 @@ public class BlackJackMain extends Application {
 
         // Pass player's name and balance to the BlackjackGame controller
         controller.setPlayerInfo(getUsername(), retrieveUserBalance());
-        controller.backGroundMusic();
 
         // Create and set the scene
         Scene scene = new Scene(root);

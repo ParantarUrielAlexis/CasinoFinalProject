@@ -31,20 +31,5 @@
             <Image url="@../../../BlackJack/titleimage.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="618.0" fitWidth="857.0" layoutX="101.0" layoutY="87.0" pickOnBounds="true">
-         <image>
-            <Image url="@../../../BlackJack/blackjack_design2.png" />
-         </image>
-      </ImageView>
-<!--      <ImageView fitHeight="193.0" fitWidth="519.0" layoutX="1290.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true>-->
-<!--         <image>-->
-<!--            <Image url="@../../../BlackJack/blackjack_design2.png" />-->
-<!--         </image>      -->
-<!--      </ImageView>-->
-      <ImageView fitHeight="346.0" fitWidth="329.0" layoutX="1417.0" layoutY="548.0" pickOnBounds="true">
-         <image>
-            <Image url="@../../../BlackJack/blackjack_design1.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

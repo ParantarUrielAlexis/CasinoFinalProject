@@ -55,8 +55,9 @@
             <Button layoutX="985.0" layoutY="365.0" mnemonicParsing="false" onAction="#onSlotMachineBTNClick" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: Black;" textFill="#030303">
                <graphic>
                   <ImageView fitHeight="250.0" fitWidth="250.0" focusTraversable="true" pickOnBounds="true">
-
-                  </ImageView>
+                     <image>
+                        <Image url="@../../../SlotMachine/SMBackground.png" />
+                     </image></ImageView>
                </graphic></Button>
             <Button fx:id="btnBlackJack" layoutX="1285.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnBlackJackOnAction" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: Black;" textFill="#030303">
                <graphic>
