@@ -1,9 +1,6 @@
 package com.example.casinoroyale;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -18,23 +17,20 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.control.Button;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
+import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class SlotMachine implements Initializable {
 
-    private ArrayList<String> imagePaths1;
-    private ArrayList<String> imagePaths2;
-    private ArrayList<String> imagePaths3;// List to store image paths
+    private ArrayList<String> Paths1;
+    private ArrayList<String> Paths2;
+    private ArrayList<String> Paths3;// List to store image paths
 
     @FXML
     ImageView Card1;
@@ -50,98 +46,166 @@ public class SlotMachine implements Initializable {
     ImageView State;
     private MediaPlayer mediaPlayer;
 
+    @FXML
+    Label Balance;
+
+    @FXML
+    Label Total;
+
+    public int Randomizer1, Randomizer2, Randomizer3;
+
+    public int c1,c2,c3;
+
+    static int userBalance;
+
+    public int TotalBet;
+
+    private Parent depositRoot;
+    private Parent gobackRoot;
+
+
+
+
 
     public void onSpinBTN(ActionEvent actionEvent) throws InterruptedException {
-        imagePaths1 = new ArrayList<>();
-        imagePaths2 = new ArrayList<>();
-        imagePaths3 = new ArrayList<>();// Reinitialize the list each time to avoid duplicates
+        if (TotalBet == 0) {
+            System.out.println("Please set a bet amount before spinning!");
+            return;
+        }
+        Paths1 = new ArrayList<>();
+        Paths2 = new ArrayList<>();
+        Paths3 = new ArrayList<>();// Reinitialize the list each time to avoid duplicates
 
-
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
-        imagePaths1.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
-
-
-
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
-        imagePaths2.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
-
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\1.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\2.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\3.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\4.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\5.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\6.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\7.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\8.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\9.png");
-        imagePaths3.add("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\10.png");
-
+        Paths1.add("1.png");
+        Paths1.add("2.png");
+        Paths1.add("3.png");
+        Paths1.add("4.png");
+        Paths1.add("5.png");
+        Paths1.add("6.png");
+        Paths1.add("7.png");
+        Paths1.add("8.png");
+        Paths1.add("9.png");
+        Paths1.add("10.png");
+        Paths2.add("1.png");
+        Paths2.add("2.png");
+        Paths2.add("3.png");
+        Paths2.add("4.png");
+        Paths2.add("5.png");
+        Paths2.add("6.png");
+        Paths2.add("7.png");
+        Paths2.add("8.png");
+        Paths2.add("9.png");
+        Paths2.add("10.png");
+        Paths3.add("1.png");
+        Paths3.add("2.png");
+        Paths3.add("3.png");
+        Paths3.add("4.png");
+        Paths3.add("5.png");
+        Paths3.add("6.png");
+        Paths3.add("7.png");
+        Paths3.add("8.png");
+        Paths3.add("9.png");
+        Paths3.add("10.png");
 
         Shuffle1();
         Shuffle2();
         Shuffle3();
 
-
-
         SpinSound();
-        disableButtonForTwoSeconds();
-
 
 
         if (checkAllSame()) {
             // Jackpot! Display jackpot message
-            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\Jackpot.gif"));
+            String checker1 = "/SlotMachine/" + "Jackpot.gif";
+            Image JImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(checker1)));
+            State.setImage(JImage);
             JackpotSound();
-            System.out.println("Jackpot!");  // Replace with your UI update for Jackpot
+
+            TotalBet *= 5;
+            userBalance += TotalBet;
+            updateUserBalanceInDatabase();
+            Balance.setText(userBalance + "");
+            TotalBet = 0;
+            Total.setText(TotalBet + "");
+            disableButtonForTwoSeconds();
         } else if (checkTwoSame()) {
             // Two of the same! Display win 100 message
-            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\YouWin.gif"));
+            String checker2 = "/SlotMachine/" + "YouWin.gif";
+            Image WImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(checker2)));
+            State.setImage(WImage);
             winSound();
-            System.out.println("Win 100!");  // Replace with your UI update for win 100
+
+            TotalBet *= 2;
+            userBalance += TotalBet;
+            updateUserBalanceInDatabase();
+            Balance.setText(userBalance + "");
+            TotalBet = 0;
+            Total.setText(TotalBet + "");
+            disableButtonForTwoSeconds();
         } else {
             // No win
-            State.setImage(new Image("C:\\Users\\kent espia\\IdeaProjects\\CasinoFinalProject\\src\\main\\resources\\SlotMachine\\YouLost.gif"));
+            String checker3 = "/SlotMachine/" + "YouLost.gif";
+            Image LImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(checker3)));
+            State.setImage(LImage);
             loseSound();
-            System.out.println("Try again!");  // Replace with your UI update for no win
+
+            TotalBet *= -1;
+            userBalance += TotalBet;
+            updateUserBalanceInDatabase();
+            Balance.setText(userBalance + "");
+            TotalBet = 0;
+            Total.setText(TotalBet + "");
+            if(retrieveUserBalance() > 0){
+                disableButtonForTwoSeconds();
+            }
+            else if(retrieveUserBalance() == 0){
+                spinBTN.setDisable(true);
+            }
+
         }
+
+
 
     }
 
     private boolean checkAllSame() {
-        String firstImage = imagePaths1.get(0);
-        return firstImage.equals(imagePaths2.get(0)) && firstImage.equals(imagePaths3.get(0));
+        return (c1 == c2 && c1 == c3) || (c2 == c1 && c2 == c3) || (c3 == c1 && c3 == c2);
     }
 
     private boolean checkTwoSame() {
-        String image1 = imagePaths1.get(0);
-        String image2 = imagePaths2.get(0);
-        String image3 = imagePaths3.get(0);
+        // Check if c1 is the same as either c2 or c3, but not all three
+        if ((c1 == c2 && c1 != c3) || (c1 == c3 && c1 != c2)) {
+            return true;
+        }
+        // Check if c2 is the same as either c1 or c3, but not all three
+        else if ((c2 == c1 && c2 != c3) || (c2 == c3 && c2 != c1)) {
+            return true;
+        }
+        // Check if c3 is the same as either c1 or c2, but not all three
+        else if ((c3 == c1 && c3 != c2) || (c3 == c2 && c3 != c1)) {
+            return true;
+        }
+        // If none of the above conditions are met, then no two characters are same
+        else {
+            return false;
+        }
 
-        return (image1.equals(image2) && !image1.equals(image3)) ||
-                (image2.equals(image3) && !image1.equals(image2)) ||
-                (image1.equals(image3) && !image1.equals(image2));
+
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SMmusic();
+        userBalance = (int) retrieveUserBalance();
+        Balance.setText(userBalance+"");
+        Total.setText(TotalBet+"");
+        updateSpinButtonState();
+        try {
+            depositRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("deposit.fxml")));
+            gobackRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        } catch (IOException e) {
+            System.err.println("Error loading FXML file: " + e.getMessage());
+        }
     }
 
     public void winSound(){
@@ -186,40 +250,54 @@ public class SlotMachine implements Initializable {
     }
 
     public void Shuffle1(){
-        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
-        Collections.shuffle(imagePaths1);
-        pauseTransition.setOnFinished(event -> {
-            Card1.setImage(new Image(imagePaths1.get(0)));
-        });
-        pauseTransition.play();
+        Randomizer1= new Random().nextInt(10);
+        c1 = Randomizer1;
+        String imagePath1 = "/SlotMachine/" + Paths2.get(Randomizer1);
+        Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath1)));
+
+        try{
+            Card1.setImage(image1);
+        }catch (Exception e){
+            System.err.println("Error loading image: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void Shuffle2(){
-        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
-        Collections.shuffle(imagePaths2);
-        pauseTransition.setOnFinished(event -> {
-            Card2.setImage(new Image(imagePaths2.get(0)));
-        });
-        pauseTransition.play();
+        Randomizer2 = new Random().nextInt(10);
+        c2 = Randomizer2;
+        String imagePath2 = "/SlotMachine/" + Paths2.get(Randomizer2);
+        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath2)));
+
+        try{
+            Card2.setImage(image2);
+        }catch (Exception e){
+            System.err.println("Error loading image: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void Shuffle3(){
-        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
-        Collections.shuffle(imagePaths3);
-        pauseTransition.setOnFinished(event -> {
-            Card3.setImage(new Image(imagePaths3.get(0)));
-        });
-        pauseTransition.play();
+        Randomizer3 = new Random().nextInt(10);
+        c3 = Randomizer3;
+        String imagePath3 = "/SlotMachine/" + Paths3.get(Randomizer3);
+        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath3)));
+
+        try{
+            Card3.setImage(image3);
+        }catch (Exception e){
+            System.err.println("Error loading image: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void onBackClick(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
-            getDPI(event, root);
-
-
-        } catch (IOException e) {
-            System.err.println("Error loading FXML file: " + e.getMessage());
+        stopMusic();
+        if (gobackRoot != null) { // Check if scene is loaded
+            getDPI(event, gobackRoot);
+        } else {
+            // Handle case where scene is not loaded (e.g., display error message)
+            System.err.println("Deposit scene not loaded. Please try again later.");
         }
     }
 
@@ -238,6 +316,7 @@ public class SlotMachine implements Initializable {
     }
 
     public void SMmusic() {
+
         String sm = "src/main/resources/background_musics/SlotMachineMusic.mp3";
         Media smh = new Media(Paths.get(sm).toUri().toString());
         mediaPlayer = new MediaPlayer(smh);
@@ -251,5 +330,72 @@ public class SlotMachine implements Initializable {
         });
 
         mediaPlayer.play();
+    }
+
+    public void stopMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();  // Stop the media player
+        }
+    }
+
+
+    private double retrieveUserBalance() {
+        return SQLHelper.getBalance(SignInController.getUserId());
+    }
+    private void updateUserBalanceInDatabase() {
+        SQLHelper.updateBalance(SignInController.getUserId(), userBalance);
+    }
+
+    public void PlusBet(ActionEvent actionEvent) {
+
+        // Check if new bet exceeds user balance
+        if (TotalBet <= retrieveUserBalance() && (TotalBet + 50) <= retrieveUserBalance()) {
+            TotalBet += 50;
+            Total.setText(String.valueOf(TotalBet));
+        } else if ((TotalBet + 50) > retrieveUserBalance()) {
+            TotalBet = (int) retrieveUserBalance();
+            Total.setText(String.valueOf(TotalBet));
+        }else {
+            // Handle case where bet exceeds user balance (e.g., show error message)
+            System.out.println("Insufficient balance. Max bet: " + retrieveUserBalance());
+        }
+
+    }
+
+    public void MinusBet(ActionEvent actionEvent) {
+        // Check if new bet goes below zero
+        if (TotalBet >= 50) {
+            TotalBet -= 50;
+            Total.setText(String.valueOf(TotalBet));
+        }  else if ((TotalBet - 50) < 0) {
+            TotalBet = 0;
+            Total.setText(String.valueOf(TotalBet));
+        }else {
+            // Handle case where bet goes below zero (e.g., set minimum bet to 0)
+            TotalBet = 0;
+        }
+    }
+
+    public void MaxBet(ActionEvent actionEvent) {
+        TotalBet = (int) retrieveUserBalance();
+        Total.setText(String.valueOf(TotalBet));
+    }
+
+    private void updateSpinButtonState() {
+        spinBTN.setDisable(userBalance == 0); // Disable button if balance is zero
+        if (userBalance == 0) {
+            System.out.println("Insufficient balance. Please add funds to play.");
+            // You can also display an informative message to the user (e.g., using an alert dialog)
+        }
+    }
+
+    public void TopUpBTN(ActionEvent actionEvent) {
+        stopMusic();
+        if (depositRoot != null) { // Check if scene is loaded
+            getDPI(actionEvent, depositRoot);
+        } else {
+            // Handle case where scene is not loaded (e.g., display error message)
+            System.err.println("Deposit scene not loaded. Please try again later.");
+        }
     }
 }

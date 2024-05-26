@@ -57,6 +57,24 @@ public class SQLHelper {
         return userBalance;
     }
 
+    public static String getUsername(int userId) {
+        String username = ""; // Default value in case of error
+        try (Connection c = getConnection();
+             PreparedStatement preparedStatement = c.prepareStatement("SELECT username FROM users WHERE id = ?")) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet result = preparedStatement.executeQuery();
+
+            if (result.next()) {
+                username = result.getString("username");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return username;
+    }
+
     public static void updateBalance(int userId, double userBalance) {
         try (Connection c = getConnection();
              PreparedStatement preparedStatement = c.prepareStatement("UPDATE users SET balance = ? WHERE id = ?")) {
