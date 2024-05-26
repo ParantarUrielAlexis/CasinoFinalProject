@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -114,11 +115,19 @@ public class SignInController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
                     try {
                         Parent root = loader.load();
+
+                        // Calculate the DPI scaling factor
+                        double dpiScale = ScreenHelper.getDPIScale();
+                        // Apply the scaling transformation
+                        Scale scale = new Scale(dpiScale, dpiScale);
+                        root.getTransforms().add(scale);
+
                         HelloController helloController = loader.getController();
-                        helloController.initialize(userID);
+                        helloController.initialize();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) tfUsername.getScene().getWindow();
                         stage.setScene(scene);
+                        stage.setFullScreen(true);
                         stage.setTitle("User Area");
                         stage.show();
                         return;
@@ -154,11 +163,19 @@ public class SignInController {
 
             Parent root = loader.load();
 
+            // Calculate the DPI scaling factor
+            double dpiScale = ScreenHelper.getDPIScale();
+
+            // Apply the scaling transformation
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
             Scene scene = new Scene(root);
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
             stage.setScene(scene);
+            stage.setFullScreen(true);
             stage.setTitle("Registration");
             stage.show();
         } catch (IOException e) {

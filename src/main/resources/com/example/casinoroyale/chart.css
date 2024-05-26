@@ -156,6 +156,17 @@
     -fx-cursor: hand;
 }
 
+.balance-label-field-main {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 25px;
+    -fx-font-weight: 800;
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+    -fx-label-padding: 8px;
+    -fx-background-color: #27282A;
+    -fx-background-radius: 10px;
+}
+
 
 /* Style for axes, not used for now */
 .custom-axis .axis-tick-mark {

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #27282A;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #27282A;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.RegisterController">
    <children>
-      <AnchorPane layoutX="656.0" layoutY="193.0" prefHeight="694.0" prefWidth="100.0">
+      <AnchorPane layoutX="645.0" layoutY="193.0" prefHeight="694.0" prefWidth="631.0" stylesheets="@chart.css">
          <children>
             <TextField fx:id="tfFirstname" layoutX="169.0" layoutY="110.0" prefHeight="35.0" prefWidth="347.0" promptText="Firstname" styleClass="textfield" stylesheets="@styles.css" />
             <TextField fx:id="tfLastname" layoutX="169.0" layoutY="160.0" prefHeight="35.0" prefWidth="347.0" promptText="Lastname" styleClass="textfield" stylesheets="@styles.css" />
@@ -21,63 +21,62 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <CheckBox fx:id="cbBtn" layoutX="181.0" layoutY="417.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" textFill="WHITE">
+            <CheckBox fx:id="cbBtn" layoutX="170.0" layoutY="414.0" mnemonicParsing="false" onAction="#showPassword" prefHeight="18.0" prefWidth="197.0" stylesheets="styles.css" text="Show Password" textFill="WHITE">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Poppins Regular" size="14.0" />
                </font>
             </CheckBox>
-            <Label layoutX="162.0" layoutY="63.0" styleClass="welcome-label" stylesheets="chart.css" text="Set up your account.">
+            <Label layoutX="126.0" layoutY="26.0" prefHeight="47.0" prefWidth="419.0" text="Set up your           account." textFill="WHITE">
                <font>
-                  <Font name="Cambria Bold" size="39.0" />
+                  <Font name="Poppins Bold" size="33.0" />
                </font>
             </Label>
-            <Text fx:id="showEmpty" fill="RED" layoutX="353.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill in all fields" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
+            <Text fx:id="showEmpty" fill="RED" layoutX="190.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill in all fields" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Poppins Regular" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="showUsernameExists" fill="RED" layoutX="351.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username already exists" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
+            <Text fx:id="showUsernameExists" fill="RED" layoutX="190.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username already exists" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Poppins Regular" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="showEmailExists" fill="RED" layoutX="351.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email already exists" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
+            <Text fx:id="showEmailExists" fill="RED" layoutX="190.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email already exists" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Poppins Regular" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="showRegistered" fill="#00ff74" layoutX="351.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User registered successfully" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
+            <Text fx:id="showRegistered" fill="#00ff74" layoutX="190.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User registered successfully" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Poppins Regular" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="showFailedMessage" fill="RED" layoutX="353.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Failed user registered" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
+            <Text fx:id="showFailedMessage" fill="RED" layoutX="190.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Failed user registered" textAlignment="CENTER" visible="false" wrappingWidth="254.39999999999975">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Poppins Regular" size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="169.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" textAlignment="CENTER" wrappingWidth="180.6767578125">
+            <Text fill="WHITE" layoutX="190.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" textAlignment="CENTER" wrappingWidth="205.6767578125">
+               <font>
+                  <Font name="Poppins Regular" size="15.0" />
+               </font>
+            </Text>
+            <TextField fx:id="ShowPassword" layoutX="169.0" layoutY="360.0" onAction="#showPassword" prefHeight="35.0" prefWidth="347.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" visible="false" />
+            <Label layoutX="411.0" layoutY="555.0" onMouseClicked="#handleSignIn" prefHeight="20.0" prefWidth="65.0" styleClass="register-label" stylesheets="chart.css" text="Sign-in" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
-            </Text>
-            <TextField fx:id="ShowPassword" layoutX="349.0" layoutY="407.0" onAction="#showPassword" prefHeight="38.0" prefWidth="254.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" visible="false" />
-            <Text fill="#b4abab" layoutX="170.0" layoutY="676.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright ©2024-2075 PandaHaven. All rights reserved." />
-            <Label layoutX="353.0" layoutY="572.0" onMouseClicked="#handleSignIn" prefHeight="17.0" prefWidth="46.0" text="Sign-in" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
             </Label>
+            <ImageView fitHeight="56.0" fitWidth="59.0" layoutX="326.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/register.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <ImageView fitHeight="526.0" fitWidth="836.0" layoutX="1388.0" layoutY="548.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../backgrounds/panda-overlay.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="336.0" fitWidth="455.0" layoutX="30.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../backgrounds/panda-haven.png" />
          </image>
       </ImageView>
    </children>

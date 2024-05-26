@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -168,11 +169,19 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
             Parent root = loader.load();
 
+            // Calculate the DPI scaling factor
+            double dpiScale = ScreenHelper.getDPIScale();
+
+            // Apply the scaling transformation
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
             Scene scene = new Scene(root);
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
             stage.setScene(scene);
+            stage.setFullScreen(true);
             stage.setTitle("Sign In");
             stage.show();
         } catch (IOException e) {

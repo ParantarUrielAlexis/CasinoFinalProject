@@ -30,8 +30,8 @@ public class DepositController {
 
     private int userId;
 
-    public void initialize(int userId) {
-        this.userId = userId;
+    public void initialize() {
+        this.userId = SignInController.getUserId();
         updateBalance();
     }
 
@@ -65,23 +65,27 @@ public class DepositController {
         try (Connection connection = SQLHelper.getConnection()) {
             // Update the user's balance in the database
             String updateBalanceQuery = "UPDATE users SET balance = balance + ? WHERE id = ?";
-            try (PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery)) {
-                updateBalanceStatement.setDouble(1, depositAmount);
-                updateBalanceStatement.setInt(2, userId);
-                int rowsUpdated = updateBalanceStatement.executeUpdate();
-
-                if (rowsUpdated > 0) {
-                    // Balance updated successfully
-                    updateBalance();
-                } else {
-                    // No user with the specified ID found
-                    System.out.println("User not found");
-                    // You might want to show an error message to the user here
-                }
-            }
+            updateBalance(depositAmount, connection, updateBalanceQuery);
         } catch (SQLException e) {
             e.printStackTrace();
             // You might want to show an error message to the user here
+        }
+    }
+
+    private void updateBalance(double depositAmount, Connection connection, String updateBalanceQuery) throws SQLException {
+        try (PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery)) {
+            updateBalanceStatement.setDouble(1, depositAmount);
+            updateBalanceStatement.setInt(2, userId);
+            int rowsUpdated = updateBalanceStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                // Balance updated successfully
+                updateBalance();
+            } else {
+                // No user with the specified ID found
+                System.out.println("User not found");
+                // You might want to show an error message to the user here
+            }
         }
     }
 
@@ -114,20 +118,7 @@ public class DepositController {
                     if (currentBalance >= withdrawAmount) {
                         // Update the user's balance in the database
                         String updateBalanceQuery = "UPDATE users SET balance = balance - ? WHERE id = ?";
-                        try (PreparedStatement updateBalanceStatement = connection.prepareStatement(updateBalanceQuery)) {
-                            updateBalanceStatement.setDouble(1, withdrawAmount);
-                            updateBalanceStatement.setInt(2, userId);
-                            int rowsUpdated = updateBalanceStatement.executeUpdate();
-
-                            if (rowsUpdated > 0) {
-                                // Balance updated successfully
-                                updateBalance();
-                            } else {
-                                // No user with the specified ID found
-                                System.out.println("User not found");
-                                // You might want to show an error message to the user here
-                            }
-                        }
+                        updateBalance(withdrawAmount, connection, updateBalanceQuery);
                     } else {
                         // Insufficient balance
                         System.out.println("Insufficient balance for withdrawal");

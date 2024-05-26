@@ -1,42 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HelloController">
-   <children>
-      <AnchorPane prefHeight="543.0" prefWidth="1070.0" styleClass="root" stylesheets="@styles.css">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HelloController">
+   <top>
+      <AnchorPane prefHeight="78.0" prefWidth="1920.0" style="-fx-background-color: #27282A;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnHilo" layoutX="14.0" layoutY="135.0" mnemonicParsing="false" onAction="#onHiloBTNClick" prefHeight="243.0" prefWidth="234.0" style="-fx-background-color: black;" stylesheets="@styles.css">
+            <Label fx:id="helloUser" alignment="CENTER" layoutX="925.0" layoutY="17.0" text="Hello" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Regular" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="66.0" fitWidth="74.0" layoutX="848.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/panda-logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="1864.0" layoutY="20.0" prefHeight="46.0" prefWidth="29.0" text="X" textFill="WHITE">
+               <font>
+                  <Font name="Poppins Bold" size="33.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="41.0" fitWidth="37.0" layoutX="1804.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/log-out.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F0CF7B;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="1002.0" fitWidth="1920.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/main-bg.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnHilo" layoutX="385.0" layoutY="365.0" mnemonicParsing="false" onAction="#onHiloBTNClick" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: black;" stylesheets="@styles.css">
                <graphic>
-                  <ImageView fitHeight="241.0" fitWidth="235.0" pickOnBounds="true">
+                  <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true">
                      <Image url="@../../../backgrounds/hilobg.png" />
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="268.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCrashBTNClick" prefHeight="243.0" prefWidth="234.0" style="-fx-background-color: black;" stylesheets="@styles.css">
+            <Button layoutX="685.0" layoutY="365.0" mnemonicParsing="false" onAction="#onCrashBTNClick" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: black;" stylesheets="@styles.css">
                <graphic>
-                  <ImageView fitHeight="243.0" fitWidth="241.0" pickOnBounds="true">
+                  <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true">
                      <Image url="@../../../backgrounds/crashbg.png" />
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="543.0" layoutY="135.0" mnemonicParsing="false" onAction="#onSlotMachineBTNClick" prefHeight="243.0" prefWidth="234.0" style="-fx-background-color: Black;" textFill="#030303">
+            <Button layoutX="985.0" layoutY="365.0" mnemonicParsing="false" onAction="#onSlotMachineBTNClick" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: Black;" textFill="#030303">
                <graphic>
-                  <ImageView fitHeight="243.0" fitWidth="241.0" focusTraversable="true" pickOnBounds="true">
-                     <image>
-                        <Image url="@../../../backgrounds/slotmachine.png" />
-                     </image>
+                  <ImageView fitHeight="250.0" fitWidth="250.0" focusTraversable="true" pickOnBounds="true">
+
                   </ImageView>
                </graphic></Button>
-            <Button layoutX="811.0" layoutY="135.0" mnemonicParsing="false" prefHeight="243.0" prefWidth="234.0" text="Button" />
-            <Button fx:id="btnDeposit" layoutX="973.0" layoutY="65.0" mnemonicParsing="false" onAction="#goDeposit" text="Deposit" />
-            <Text fill="GOLD" layoutX="32.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: ">
+            <Button layoutX="1285.0" layoutY="365.0" mnemonicParsing="false" prefHeight="250.0" prefWidth="250.0" text="Button" />
+            <Button fx:id="btnDeposit" layoutX="878.0" layoutY="846.0" mnemonicParsing="false" onAction="#goDeposit" prefHeight="55.0" prefWidth="176.0" style="-fx-background-color: #27282A;" text="Deposit" textFill="WHITE">
                <font>
-                  <Font name="Franklin Gothic Medium Italic" size="25.0" />
+                  <Font name="Poppins Bold" size="20.0" />
+               </font></Button>
+            <Label fx:id="balance" alignment="CENTER" layoutX="750.0" layoutY="47.0" prefHeight="49.0" prefWidth="432.0" styleClass="balance-label-field-main" text="Balance: " textFill="WHITE">
+               <font>
+                  <Font name="Poppins Regular" size="40.0" />
                </font>
-            </Text>
+            </Label>
+            <Label layoutX="213.0" layoutY="219.0" prefHeight="43.0" prefWidth="265.0" text="Popular Games">
+               <font>
+                  <Font name="Poppins Bold" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="162.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/popular.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </children>
-</Pane>
+   </center>
+
+   <stylesheets>
+      <URL value="@chart.css" />
+   </stylesheets>
+
+</BorderPane>

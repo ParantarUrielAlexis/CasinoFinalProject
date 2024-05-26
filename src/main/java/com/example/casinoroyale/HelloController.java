@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -31,11 +32,67 @@ import java.util.Objects;
 public class HelloController {
     private static double originalWidth = 462.0;
     private static double originalHeight = 701.0;
+    @FXML
+    public Label helloUser;
+    @FXML
+    public Label balance;
 
     private int userId;
 
-    public void initialize(int userId) {
-        this.userId = userId;
+    public void initialize() {
+        this.userId = SignInController.getUserId();
+        fetchAndSetUsername();
+        fetchAndSetBalance();
+    }
+
+    private void fetchAndSetUsername() {
+        try (Connection connection = SQLHelper.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            String query = "SELECT firstname FROM userprofile WHERE id = " + userId;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                String username = resultSet.getString("firstname");
+                username = capitalizeFirstLetter(username);
+                setHelloUser(username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database errors appropriately
+        }
+    }
+
+    private void fetchAndSetBalance() {
+        try (Connection connection = SQLHelper.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            String query = "SELECT balance FROM users WHERE id = " + userId;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                double balanceValue = resultSet.getDouble("balance");
+                setBalance(balanceValue);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database errors appropriately
+        }
+    }
+
+    private void setBalance(double balanceValue) {
+        balance.setText("Balance: ₱" + String.format("%.2f", balanceValue));
+    }
+
+    private String capitalizeFirstLetter(String username) {
+        if (username == null || username.isEmpty()) {
+            return username;
+        }
+        return username.substring(0, 1).toUpperCase() + username.substring(1).toLowerCase();
+    }
+
+    private void setHelloUser(String username) {
+        helloUser.setText("Hello, " + username);
     }
 
     @FXML
@@ -163,8 +220,16 @@ public class HelloController {
 
     private void showMainScreen(Stage primaryStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("crash-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("crash-view.fxml")));
+
+            // Calculate the DPI scaling factor
+            double dpiScale = ScreenHelper.getDPIScale();
+
+            // Apply the scaling transformation
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
+            Scene scene = new Scene(root, 1920, 1080);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
@@ -192,7 +257,7 @@ public class HelloController {
         root.resize(originalWidth, originalHeight);
     }
     @FXML
-    public void onSlotMachineBTNClick(ActionEvent event) throws IOException {
+    public void onSlotMachineBTNClick(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SlotMachine.fxml")));
             SlotMachine.getDPI(event, root);
@@ -230,7 +295,7 @@ public class HelloController {
             Parent root = loader.load();
             
             DepositController depositController = loader.getController();
-            depositController.initialize(userId);
+            depositController.initialize();
 
             // Create a new scene with the loaded FXML file
             Scene scene = new Scene(root);
