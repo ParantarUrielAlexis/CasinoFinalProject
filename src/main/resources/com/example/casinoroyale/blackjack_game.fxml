@@ -88,7 +88,7 @@
                   <Font name="Times New Roman Bold" size="45.0" />
                </font>
             </Label>
-            <Label fx:id="labelBalance" prefHeight="71.0" prefWidth="301.0" textFill="#0a0606">
+            <Label fx:id="labelBalance" prefHeight="71.0" prefWidth="301.0" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold Italic" size="42.0" />
                </font>
@@ -151,7 +151,7 @@
          <padding>
             <Insets left="815.0" />
          </padding></VBox>
-      <Button fx:id="btnExit" layoutX="1843.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="60.0" prefWidth="60.0"  textFill="#030303">
+      <Button fx:id="btnExit" layoutX="1843.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="60.0" prefWidth="60.0" textFill="#030303">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="60.0" focusTraversable="true" pickOnBounds="true">
                <image>

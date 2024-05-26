@@ -98,6 +98,8 @@ public class BlackjackGame extends Application {
     int currentBet = 0;
     static String name;
 
+    public static MediaPlayer mediaPlayer;
+
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("blackjack_game.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -324,6 +326,7 @@ public class BlackjackGame extends Application {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
+        stopBackGroundMusic();
     }
 
 
@@ -482,6 +485,13 @@ public class BlackjackGame extends Application {
         Media h = new Media(Paths.get(s).toUri().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();
+    }
+
+    public void stopBackGroundMusic(){
+        String s = "src/main/resources/background_musics/blackjack_background.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.stop();
     }
 
     private void updateUserBalanceInDatabase() {
