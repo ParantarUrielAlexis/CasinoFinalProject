@@ -99,8 +99,7 @@ public class HelloController {
     @FXML
     public void onHiloBTNClick(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("hi-lo.fxml"));
-        music();
-
+        HiloMusicController.playMusic();
         // code for user balance
         try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
@@ -310,21 +309,7 @@ public class HelloController {
 
     MediaPlayer mediaPlayer;
 
-    public void music() {
-        String s = "src/main/resources/background_musics/jazz.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        mediaPlayer = new MediaPlayer(h);
 
-        // Add event handler for end of media
-        mediaPlayer.setOnEndOfMedia(() -> {
-            // Rewind the media to the beginning
-            mediaPlayer.seek(Duration.ZERO);
-            // Play the media again
-            mediaPlayer.play();
-        });
-
-        mediaPlayer.play();
-    }
 
     public void BlackJackBackGround() {
         String musicFilePath = "src/main/resources/background_musics/blackjack_background.mp3";

@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="701.0" prefWidth="462.0" styleClass="anchorpane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HiloController">
+<AnchorPane prefHeight="707.0" prefWidth="417.0" styleClass="anchorpane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.HiloController">
    <children>
-      <Button fx:id="btnHigh" disable="true" layoutX="232.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#btnHighClicked" prefHeight="44.0" prefWidth="221.0" styleClass="btn" stylesheets="@styles.css" text="High or Same" />
-      <Button fx:id="btnLow" disable="true" layoutX="232.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#btnLowClicked" prefHeight="50.0" prefWidth="222.0" styleClass="btn2" stylesheets="@styles.css" text="Low or Same" />
+      <Button fx:id="btnHigh" disable="true" layoutX="232.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#btnHighClicked" prefHeight="44.0" prefWidth="225.0" styleClass="btn" stylesheets="@styles.css" text="High or Same" />
+      <Button fx:id="btnLow" disable="true" layoutX="232.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#btnLowClicked" prefHeight="50.0" prefWidth="226.0" styleClass="btn2" stylesheets="@styles.css" text="Low or Same" />
       <ImageView fx:id="cardRandomizer" fitHeight="389.0" fitWidth="221.0" layoutX="7.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../cards/cardbg.jpg" />
@@ -21,7 +26,7 @@
          </image>
       </ImageView>
       <TextField fx:id="inputBalance" layoutX="7.0" layoutY="636.0" prefHeight="58.0" prefWidth="222.0" promptText="Enter Amount" styleClass="textfield" stylesheets="@styles.css" />
-      <Button fx:id="betID" layoutX="232.0" layoutY="636.0" mnemonicParsing="false" onAction="#playGame" prefHeight="58.0" prefWidth="222.0" stylesheets="@styles.css" text="Bet" textFill="GOLD">
+      <Button fx:id="betID" layoutX="232.0" layoutY="636.0" mnemonicParsing="false" onAction="#playGame" prefHeight="58.0" prefWidth="226.0" stylesheets="@styles.css" text="Bet" textFill="GOLD">
          <styleClass>
             <String fx:value="btn3" />
             <String fx:value="btn4" />
@@ -78,7 +83,7 @@
             <Font name="Franklin Gothic Heavy Italic" size="30.0" />
          </font>
       </Text>
-      <Pane layoutX="-3.0" layoutY="132.0" opacity="0.5" prefHeight="2.0" prefWidth="462.0" style="-fx-background-color: #ffd700;" />
+      <Pane layoutX="-3.0" layoutY="132.0" opacity="0.5" prefHeight="2.0" prefWidth="477.0" style="-fx-background-color: #ffd700;" />
       <Text fx:id="showINoBalance" fill="RED" layoutX="259.0" layoutY="616.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insufficient Balance" wrappingWidth="200.0">
          <font>
             <Font name="Franklin Gothic Heavy" size="17.0" />
@@ -110,5 +115,15 @@
          </image>
       </ImageView>
       <ProgressBar fx:id="progressBarID" layoutX="60.0" layoutY="656.0" prefHeight="18.0" prefWidth="348.0" progress="0.0" visible="false" />
+      <Button fx:id="btnBack" layoutX="426.0" layoutY="28.0" mnemonicParsing="false" onAction="#onGoBackButton" prefHeight="25.0" prefWidth="31.0" style="-fx-background-color: red;" stylesheets="@styles.css" text="X">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnTopUp" layoutX="147.0" layoutY="190.0" mnemonicParsing="false" onAction="#onGoDeposit" prefHeight="28.0" prefWidth="82.0" styleClass="btn4" stylesheets="@styles.css" text="Top-Up">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
