@@ -5,9 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #27282A;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.RegisterController">
    <children>
-      <AnchorPane layoutX="645.0" layoutY="193.0" prefHeight="694.0" prefWidth="631.0" stylesheets="@chart.css">
+      <AnchorPane layoutX="645.0" layoutY="193.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@chart.css">
          <children>
             <TextField fx:id="tfFirstname" layoutX="169.0" layoutY="110.0" prefHeight="35.0" prefWidth="347.0" promptText="Firstname" styleClass="textfield" stylesheets="@styles.css" />
             <TextField fx:id="tfLastname" layoutX="169.0" layoutY="160.0" prefHeight="35.0" prefWidth="347.0" promptText="Lastname" styleClass="textfield" stylesheets="@styles.css" />
@@ -72,12 +73,12 @@
                   <Image url="@../../../backgrounds/register.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="462.0" fitWidth="524.0" layoutX="758.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../backgrounds/panda-overlay.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="526.0" fitWidth="836.0" layoutX="1388.0" layoutY="548.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../backgrounds/panda-overlay.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

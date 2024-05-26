@@ -741,25 +741,18 @@ public class HiloController {
             // You might want to show an error message to the user here
         }
     }
-    static void getDPI(ActionEvent event, Parent root) {
-        double dpiScale = ScreenHelper.getDPIScale();
 
-
-        Scale scale = new Scale(dpiScale, dpiScale);
-        root.getTransforms().add(scale);
-
-        Scene scene = new Scene(root);
-
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.show();
-    }
     public void onGoBackButton(ActionEvent event) {
         try {
             // Load the FXML file
             HiloMusicController.stopMusic();
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+
+            double dpiScale = ScreenHelper.getDPIScale();
+
+
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
 
             // Create a new scene with the loaded FXML file
             Scene scene = new Scene(root);
@@ -770,6 +763,7 @@ public class HiloController {
             // Set the scene on the primary stage
             primaryStage.setTitle("Sign In");
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
         } catch (IOException e) {
             // Handle any IOException that occurs during loading

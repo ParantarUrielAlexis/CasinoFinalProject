@@ -3,6 +3,7 @@
 <?import java.net.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -20,6 +21,11 @@
                     <Font name="Cambria" size="30.0" />
                 </font>
             </Label>
+         <ImageView fx:id="mainMenuButton" fitHeight="39.0" fitWidth="43.0" layoutX="1867.0" layoutY="10.0" onMouseClicked="#goToMain" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../backgrounds/go-back.png" />
+            </image>
+         </ImageView>
         </AnchorPane>
     </top>
     <left>

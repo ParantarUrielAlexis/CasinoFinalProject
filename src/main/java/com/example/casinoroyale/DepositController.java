@@ -154,7 +154,7 @@ public class DepositController {
                     double updatedBalance = resultSet.getDouble("balance");
 
                     // Update the balance displayed on the UI
-                    balanceID.setText(String.valueOf(updatedBalance));
+                    balanceID.setText(String.format("₱%.2f", updatedBalance));
                 }
             }
         } catch (SQLException e) {
