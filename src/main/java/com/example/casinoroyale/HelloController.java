@@ -1,13 +1,10 @@
 package com.example.casinoroyale;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,17 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -104,8 +99,7 @@ public class HelloController {
     @FXML
     public void onHiloBTNClick(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("hi-lo.fxml"));
-        music();
-
+        HiloMusicController.playMusic();
         // code for user balance
         try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
@@ -244,7 +238,7 @@ public class HelloController {
             throw new RuntimeException("Main screen did not load", e);
         }
     }
-
+    
 
 
     // Method to adjust the anchor pane to stay in the middle
@@ -276,74 +270,10 @@ public class HelloController {
         }
 
     }
-    private void showMainScreenBlackJack(Stage primaryStage) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("blackjack_main.fxml")));
-
-            // Calculate the DPI scaling factor
-            double dpiScale = ScreenHelper.getDPIScale();
-
-            // Apply the scaling transformation
-            Scale scale = new Scale(dpiScale, dpiScale);
-            root.getTransforms().add(scale);
-
-            Scene scene = new Scene(root, 1920, 1080);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();
-        } catch (Exception e) {
-            throw new RuntimeException("Main screen did not load", e);
-        }
-    }
-    private void showSplashScreenBlackJack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("splash-view.fxml"));
-            Pane splashPane = loader.load();
-            Scene splashScene = new Scene(splashPane, 1920, 1080);
-            splashScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("chart.css")).toExternalForm());
-
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.setScene(splashScene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();
-
-            // Get the MediaView from the FXML
-            MediaView splashMediaView = (MediaView) splashPane.lookup("#splashMediaView");
-            ProgressBar progressBar = (ProgressBar) splashPane.lookup("#progressBar");
-
-            // Load and play the video
-            String videoPath = Objects.requireNonNull(getClass().getResource("/background/BlackJack.mp4")).toExternalForm();
-            Media media = new Media(videoPath);
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            splashMediaView.setMediaPlayer(mediaPlayer);
-
-            // Wait until the media is ready before binding the progress bar
-            mediaPlayer.statusProperty().addListener((obs, oldStatus, newStatus) -> {
-                if (newStatus == MediaPlayer.Status.READY) {
-                    ReadOnlyObjectProperty<Duration> durationProperty = mediaPlayer.totalDurationProperty();
-                    progressBar.progressProperty().bind(
-                            Bindings.createDoubleBinding(
-                                    () -> mediaPlayer.getCurrentTime().toMillis() / durationProperty.get().toMillis(),
-                                    mediaPlayer.currentTimeProperty(),
-                                    durationProperty
-                            )
-                    );
-                }
-            });
-
-            mediaPlayer.setOnEndOfMedia(() -> showMainScreenBlackJack(primaryStage));
-            mediaPlayer.play();
-        } catch (Exception e) {
-            throw new RuntimeException("Splash screen did not load", e);
-        }
-    }
-
 
     @FXML
     public void btnBlackJackOnAction(ActionEvent event) {
-        showSplashScreenBlackJack(event);
-        BlackJackBackGround();
+        // code for user balance
         try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
 
@@ -357,25 +287,33 @@ public class HelloController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database errors appropriately
+        }
+
+        if (mediaPlayer == null || !mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            // Start the music only if the media player is not playing
+            BlackJackBackGround();
+        }
+
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("blackjack_main.fxml")));
+            SlotMachine.getDPI(event, root);
+
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
         }
     }
 
 
+
+
     MediaPlayer mediaPlayer;
 
+
+
     public void BlackJackBackGround() {
-        String musicFilePath = "src/main/resources/background_musics/blackjack_main.mp3";
+        String musicFilePath = "src/main/resources/background_musics/blackjack_background.mp3";
         Media h = new Media(Paths.get(musicFilePath).toUri().toString());
-        mediaPlayer = new MediaPlayer(h);
-
-
-        mediaPlayer.play();
-    }
-
-    public void music() {
-        String s = "src/main/resources/background_musics/jazz.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
 
         // Add event handler for end of media
@@ -390,14 +328,12 @@ public class HelloController {
     }
 
 
-
-
     public void goDeposit(ActionEvent event) {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("deposit.fxml"));
             Parent root = loader.load();
-
+            
             DepositController depositController = loader.getController();
             depositController.initialize();
 
@@ -410,9 +346,7 @@ public class HelloController {
             // Set the scene on the primary stage
             primaryStage.setTitle("Transaction");
             primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
             primaryStage.show();
-
         } catch (IOException e) {
             // Handle any IOException that occurs during loading
             e.printStackTrace();

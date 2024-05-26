@@ -4,6 +4,10 @@ import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -13,8 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -25,6 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+
+
 
 public class HiloController {
     @FXML
@@ -60,16 +69,20 @@ public class HiloController {
     @FXML
     public Text oddsHigh, oddsLow, balancePayout;
 
-
+    @FXML
+    public Button btnBack, btnTopUp;
+    private Parent depositRoot;
+    private  Parent gobackRoot;
     MediaPlayer mediaPlayer;
     public int cardNumber1;
     private int skipCounter = 1;
     private int correctGuessCount = 0;
 
-
-    // user balance user
     static int userBalance;
+
     public void setForeground() {
+        btnBack.setVisible(false);
+        btnTopUp.setVisible(false);
         userBalance = (int) retrieveUserBalance();
         balanceID.setText(String.valueOf(userBalance));
         foreground.setVisible(true); // Set visibility to true initially
@@ -103,6 +116,7 @@ public class HiloController {
         // Set visibility to false after fade-out for foreground
         fadeOutForeground.setOnFinished(event -> {
             foreground.setVisible(false);
+            showExit();
         });
 
         // Start the pause transition for progressBarID
@@ -220,10 +234,11 @@ public class HiloController {
 
 
 
-    // Your existing code...
-
+    public void showExit(){
+        btnBack.setVisible(true);
+        btnTopUp.setVisible(true);
+    }
     public void initialized() {
-
         userBalance = (int) retrieveUserBalance();
         balanceID.setText(String.valueOf(userBalance));
         // Generate random card numbers for each ImageView
@@ -246,6 +261,12 @@ public class HiloController {
         } catch (NullPointerException e) {
             System.err.println("Error loading image: " + e.getMessage());
             e.printStackTrace();
+        }
+        try {
+            depositRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("deposit.fxml")));
+            gobackRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        } catch (IOException e) {
+            System.err.println("Error loading FXML file: " + e.getMessage());
         }
     }
 
@@ -279,6 +300,8 @@ public class HiloController {
                 setOddsOfCard();
 
                 Platform.runLater(() -> {
+                    btnBack.setDisable(true);
+                    btnTopUp.setDisable(true);
                     btnHigh.setDisable(false);
                     btnLow.setDisable(false);
                     btnSkip.setDisable(false);
@@ -374,6 +397,8 @@ public class HiloController {
         if (cardValue1 != null && cardValue2 != null) {
             // Print the result based on user's guess (High or Low)
             if ((isHigh && cardValue2 >= cardValue1) || (!isHigh && cardValue2 <= cardValue1)) {
+                btnBack.setDisable(true);
+                btnTopUp.setDisable(true);
                 winSound();
                 showWinForAMoment();
                 disableButtonsForTwoSeconds();
@@ -381,6 +406,8 @@ public class HiloController {
                 resetCard2AfterDelay();
                 setJackpot();
             } else {
+                btnBack.setDisable(false);
+                btnTopUp.setDisable(false);
                 loseSound();
                 updateUserBalanceInDatabase();
                 showLoseForAMoment();
@@ -587,7 +614,10 @@ public class HiloController {
         // Pause for 2 seconds before hiding the element and enabling buttons
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
         pauseTransition.setOnFinished(event -> {
+            btnBack.setDisable(false);
+            btnTopUp.setDisable(false);
             showCollected.setOpacity(0); // Hide the element after 2 seconds
+
         });
         pauseTransition.play();
 
@@ -686,5 +716,65 @@ public class HiloController {
     }
     private double retrieveUserBalance() {
         return SQLHelper.getBalance(SignInController.getUserId());
+    }
+
+
+    public void onGoDeposit(ActionEvent event) {
+        try {
+            HiloMusicController.stopMusic();
+            // Load the FXML file
+            Parent root = FXMLLoader.load(getClass().getResource("deposit.fxml"));
+
+            // Create a new scene with the loaded FXML file
+            Scene scene = new Scene(root);
+
+            // Get the stage from the event source
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the scene on the primary stage
+            primaryStage.setTitle("Sign In");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+            // You might want to show an error message to the user here
+        }
+    }
+    static void getDPI(ActionEvent event, Parent root) {
+        double dpiScale = ScreenHelper.getDPIScale();
+
+
+        Scale scale = new Scale(dpiScale, dpiScale);
+        root.getTransforms().add(scale);
+
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
+    }
+    public void onGoBackButton(ActionEvent event) {
+        try {
+            // Load the FXML file
+            HiloMusicController.stopMusic();
+            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+
+            // Create a new scene with the loaded FXML file
+            Scene scene = new Scene(root);
+
+            // Get the stage from the event source
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the scene on the primary stage
+            primaryStage.setTitle("Sign In");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+            // You might want to show an error message to the user here
+        }
     }
 }
