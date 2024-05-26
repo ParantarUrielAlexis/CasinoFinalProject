@@ -49,6 +49,7 @@ public class DepositController {
             // Set the scene on the primary stage
             primaryStage.setTitle("Sign In");
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
         } catch (IOException e) {
             // Handle any IOException that occurs during loading
@@ -90,7 +91,10 @@ public class DepositController {
     }
 
     public void handleDeposit(ActionEvent event) {
+
         depositMoney(event);
+        deposit_id.setText("");
+        deposit_id.setPromptText("Enter amount");
     }
 
     public void withdrawMoney(ActionEvent actionEvent) {
@@ -133,7 +137,10 @@ public class DepositController {
     }
 
     public void handleWithdraw(ActionEvent actionEvent) {
+
         withdrawMoney(actionEvent);
+        withdraw_id.setText("");
+        withdraw_id.setPromptText("Enter amount");
     }
 
     private void updateBalance() {
