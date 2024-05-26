@@ -5,9 +5,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,10 +16,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -27,7 +31,7 @@ public class BlackjackGame extends Application {
     @FXML
     public ImageView ivBackground;
     @FXML
-    public Button btnHit, btnStay, btnPlayAgain, btnBet;
+    public Button btnHit, btnStay, btnPlayAgain, btnBet, btnExit;
     @FXML
     public HBox hbButtons;
     @FXML
@@ -39,9 +43,11 @@ public class BlackjackGame extends Application {
     @FXML
     public ImageView ivPlayerHand1, ivPlayerHand2, ivPlayerHand3, ivPlayerHand4, ivPlayerHand5, ivPlayerHand6, ivPlayerHand7;
     @FXML
-    private TextField tfBet;
+    public TextField tfBet;
     @FXML
-    private Label labelStatus, labelPlayer, labelDealer, labelBalance;
+    public Label labelStatus, labelPlayer, labelDealer, labelBalance, labelPlayerName;
+
+
 
 
     private static class Card {
@@ -88,16 +94,24 @@ public class BlackjackGame extends Application {
     ArrayList<Card> playerHand;
     int playerSum;
     int playerAceCount;
-    int balance = 1000;
+    static double balance;
     int currentBet = 0;
+    static String name;
 
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(BlackjackGame.class.getResource("blackjack_game.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("blackjack_game.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        stage.setFullScreen(true);
         stage.setTitle("Black Jack");
         stage.setScene(scene);
         stage.show();
 
+
+        // Retrieve and set the user's balance when the game starts
+        balance = retrieveUserBalance();
+        labelBalance.setText(String.valueOf(balance));
+        name = getUsername();
+        labelPlayer.setText(name);
     }
 
     public static void main(String[] args) {
@@ -106,6 +120,7 @@ public class BlackjackGame extends Application {
 
     @FXML
     public void btnHitOnAction(){
+        cardSound();
         if (playerHand.size() < 7) { // Ensure there is space for another card
             Card card = deck.remove(deck.size() - 1);
             playerSum += card.getValue();
@@ -129,6 +144,7 @@ public class BlackjackGame extends Application {
 
     @FXML
     public void btnStayOnAction(){
+        cardSound();
         btnHit.setDisable(true);
         btnStay.setDisable(true);
         Image hiddenCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(hiddenCard.getImagePath())));
@@ -159,34 +175,43 @@ public class BlackjackGame extends Application {
         if (playerSum > 21) {
             message = "You Lose!";
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            loseSound();
         }
         else if (dealerSum > 21) {
             message = "You Win!";
             balance += currentBet * 2;
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
-
+            winSound();
         }
         //both you and dealer <= 21
         else if (playerSum == dealerSum) {
             message = "Tie!";
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            tie();
         }
         else if (playerSum > dealerSum) {
             message = "You Win!";
             balance += currentBet * 2;
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            winSound();
         }
         else {
             message = "You Lose!";
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            loseSound();
         }
 
         applyTypewriterEffect(labelStatus, message + " Click Play Again to start a new game.");
         labelBalance.setText("" + balance);
         btnPlayAgain.setVisible(true);
+
+        // Update the balance in the database
+        updateUserBalanceInDatabase();
     }
     @FXML
     public void btnBetOnAction() {
+        cardSound();
+        labelPlayerName.setText(name);
         String betText = tfBet.getText();
         int betAmount = Integer.parseInt(betText);
         if (!betText.isEmpty() && betText.matches("\\d+")) { // Check if the text is not null, not empty, and is a number
@@ -217,6 +242,10 @@ public class BlackjackGame extends Application {
                             Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(card.getImagePath())));
                             playerHandViews[i].setImage(cardImg);
                         }
+
+                        // Update the balance in the database
+                        updateUserBalanceInDatabase();
+
                         labelPlayer.setText("Player's Hand: " + reducePlayerAce());
                         labelDealer.setText("Dealer's Hand: ??");
                         labelPlayer.setOpacity(1);
@@ -283,6 +312,18 @@ public class BlackjackGame extends Application {
         labelPlayer.setOpacity(0);
         labelDealer.setOpacity(0);
     }
+
+    @FXML
+    public void btnExitOnAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("blackjack_main.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
+    }
+
 
     //METHOD CALLS
     public void startGame() {
@@ -405,5 +446,58 @@ public class BlackjackGame extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
+    public void cardSound(){
+        String s = "src/main/resources/background_musics/cardflick.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+    }
+
+    public void winSound(){
+        String s = "src/main/resources/background_musics/youwinsoundeffect.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+    }
+
+    public void loseSound(){
+        String s = "src/main/resources/background_musics/youlosesoundeffect.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+    }
+
+    public void tie(){
+        String s = "src/main/resources/background_musics/tiesoundeffect.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+    }
+
+    public void backGroundMusic(){
+        String s = "src/main/resources/background_musics/blackjack_background.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+    }
+
+    private void updateUserBalanceInDatabase() {
+        SQLHelper.updateBalance(SignInController.getUserId(), balance);
+    }
+
+    private double retrieveUserBalance() {
+        return SQLHelper.getBalance(SignInController.getUserId());
+    }
+
+    private String getUsername() {
+        return SQLHelper.getUsername(SignInController.getUserId());
+    }
+
+    public void setPlayerInfo(String playerName, double playerBalance) {
+        labelPlayer.setText(playerName);
+        labelBalance.setText(String.valueOf(playerBalance));
+    }
+
 
 }

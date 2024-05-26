@@ -36,7 +36,8 @@ public class HelloController {
     public Label helloUser;
     @FXML
     public Label balance;
-
+    @FXML
+    public Button btnBlackJack;
     private int userId;
 
     public void initialize() {
@@ -238,6 +239,8 @@ public class HelloController {
             throw new RuntimeException("Main screen did not load", e);
         }
     }
+    
+
 
     // Method to adjust the anchor pane to stay in the middle
     static void adjustAnchorPane(Stage stage, Parent root) {
@@ -269,11 +272,63 @@ public class HelloController {
 
     }
 
+    @FXML
+    public void btnBlackJackOnAction(ActionEvent event) {
+        // code for user balance
+        try (Connection c = SQLHelper.getConnection();
+             Statement statement = c.createStatement()) {
+
+            String selectQuery = "SELECT * FROM users where id = " + userId;
+            ResultSet result = statement.executeQuery(selectQuery);
+
+            if (result.next()) {
+                BlackjackGame.balance = result.getInt("balance");
+                BlackjackGame.name = result.getString("username");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (mediaPlayer == null || !mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            // Start the music only if the media player is not playing
+            BlackJackBackGround();
+        }
+
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("blackjack_main.fxml")));
+            SlotMachine.getDPI(event, root);
+
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     MediaPlayer mediaPlayer;
 
     public void music() {
         String s = "src/main/resources/background_musics/jazz.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
+        mediaPlayer = new MediaPlayer(h);
+
+        // Add event handler for end of media
+        mediaPlayer.setOnEndOfMedia(() -> {
+            // Rewind the media to the beginning
+            mediaPlayer.seek(Duration.ZERO);
+            // Play the media again
+            mediaPlayer.play();
+        });
+
+        mediaPlayer.play();
+    }
+
+    public void BlackJackBackGround() {
+        String musicFilePath = "src/main/resources/background_musics/blackjack_background.mp3";
+        Media h = new Media(Paths.get(musicFilePath).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
 
         // Add event handler for end of media
