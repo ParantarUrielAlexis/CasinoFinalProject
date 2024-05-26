@@ -47,7 +47,7 @@ public class BlackjackGame extends Application {
     @FXML
     public Label labelStatus, labelPlayer, labelDealer, labelBalance, labelPlayerName;
 
-
+    private static MediaPlayer backgroundMediaPlayer;
 
 
     private static class Card {
@@ -189,6 +189,7 @@ public class BlackjackGame extends Application {
         else if (playerSum == dealerSum) {
             message = "Tie!";
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            balance = currentBet;
             tie();
         }
         else if (playerSum > dealerSum) {
@@ -480,20 +481,19 @@ public class BlackjackGame extends Application {
         mediaPlayer.play();
     }
 
-    public void backGroundMusic(){
+    public void backGroundMusic() {
         String s = "src/main/resources/background_musics/blackjack_background.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.play();
+        backgroundMediaPlayer = new MediaPlayer(h);
+        backgroundMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music indefinitely
+        backgroundMediaPlayer.play();
     }
 
-    public void stopBackGroundMusic(){
-        String s = "src/main/resources/background_musics/blackjack_background.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.stop();
+    public void stopBackGroundMusic() {
+        if (backgroundMediaPlayer != null) {
+            backgroundMediaPlayer.stop();
+        }
     }
-
     private void updateUserBalanceInDatabase() {
         SQLHelper.updateBalance(SignInController.getUserId(), balance);
     }

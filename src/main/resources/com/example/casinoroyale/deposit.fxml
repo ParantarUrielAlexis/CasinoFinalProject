@@ -42,14 +42,14 @@
                   <Font name="Times New Roman" size="60.0" />
                </font>
             </Text>
-            <HBox layoutX="117.0" layoutY="81.0" prefHeight="93.0" prefWidth="669.0" style="-fx-font-family: 'Poppins';                 -fx-font-size: 20px;                 -fx-font-weight: 800;                 -fx-font-style: normal;                 -fx-text-fill: white;                 -fx-label-padding: 8px;                 -fx-background-color: black;                 -fx-background-radius: 10px;">
+            <HBox layoutX="10.0" layoutY="81.0" prefHeight="93.0" prefWidth="884.0" style="-fx-font-family: 'Poppins';                 -fx-font-size: 20px;                 -fx-font-weight: 800;                 -fx-font-style: normal;                 -fx-text-fill: white;                 -fx-label-padding: 8px;                 -fx-background-color: black;                 -fx-background-radius: 10px;">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" wrappingWidth="321.8134765625">
                      <font>
                         <Font name="Times New Roman Bold" size="80.0" />
                      </font>
                   </Text>
-                  <Text fx:id="balanceID" boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textOrigin="CENTER" wrappingWidth="338.38671875">
+                  <Text fx:id="balanceID" boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textOrigin="CENTER" wrappingWidth="556.38671875">
                      <font>
                         <Font name="Times New Roman" size="80.0" />
                      </font>
