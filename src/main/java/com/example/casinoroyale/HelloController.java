@@ -20,7 +20,7 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -274,6 +274,11 @@ public class HelloController {
 
     @FXML
     public void btnBlackJackOnAction(ActionEvent event) {
+        // Stop the music if the mediaPlayer is playing
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            mediaPlayer.stop();
+        }
+
         // code for user balance
         try (Connection c = SQLHelper.getConnection();
              Statement statement = c.createStatement()) {
@@ -327,17 +332,11 @@ public class HelloController {
     }
 
     public void BlackJackBackGround() {
-        String musicFilePath = "src/main/resources/background_musics/blackjack_background.mp3";
+        String musicFilePath = "src/main/resources/background_musics/blackjack_main.mp3";
         Media h = new Media(Paths.get(musicFilePath).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
 
-        // Add event handler for end of media
-        mediaPlayer.setOnEndOfMedia(() -> {
-            // Rewind the media to the beginning
-            mediaPlayer.seek(Duration.ZERO);
-            // Play the media again
-            mediaPlayer.play();
-        });
+
 
         mediaPlayer.play();
     }

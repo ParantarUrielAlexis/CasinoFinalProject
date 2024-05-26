@@ -253,6 +253,7 @@ public class BlackjackGame extends Application {
                         //                if(reduceDealerAce() == 21){
                         //                    btnHit.setDisable(true);
                         //                }
+                        btnExit.setDisable(true);
                         btnHit.setDisable(false);
                         btnStay.setDisable(false);
                         btnPlayAgain.setVisible(false);
@@ -311,6 +312,7 @@ public class BlackjackGame extends Application {
         labelDealer.setText("Dealer's Hand: ");
         labelPlayer.setOpacity(0);
         labelDealer.setOpacity(0);
+        btnExit.setDisable(false);
     }
 
     @FXML
