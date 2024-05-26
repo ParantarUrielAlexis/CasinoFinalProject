@@ -1,6 +1,7 @@
 package com.example.casinoroyale;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -255,39 +256,42 @@ public class HiloController {
 
         if (inputBalance.getText().isEmpty()) {
             showNoStake.setOpacity(1);
-            return -1; // Return -1 to indicate no bet amount entered
+            return -1;
         }
 
-        // Deduct the bet amount from the balance
-        int betAmount = Integer.parseInt(inputBalance.getText()); // Get the bet amount from the input
-        int currentBalance = userBalance; // Get the current balance
-        int newBalance = currentBalance - betAmount; // Calculate the new balance after deducting the bet
+        int betAmount = Integer.parseInt(inputBalance.getText());
+        int newBalance = userBalance - betAmount;
 
-        if (newBalance >= 0) { // Ensure the balance is not negative
+        if (newBalance >= 0) {
             userBalance = newBalance;
-            balanceID.setText(String.valueOf(newBalance)); // Update the balance text
-            updateUserBalanceInDatabase(); // Update the balance in the database
+            balanceID.setText(String.valueOf(newBalance));
+            updateUserBalanceInDatabase();
         } else {
             showINoBalance.setOpacity(1);
-            return -1; // Return -1 to indicate insufficient balance
+            return -1;
         }
 
-        // Initialize the game
-        cardSound();
-        initialized(); // Refresh the game
-        setOddsOfCard();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                cardSound();
+                initialized();
+                setOddsOfCard();
 
-        // Enable/disable buttons as needed
-        btnHigh.setDisable(false);
-        btnLow.setDisable(false);
-        btnSkip.setDisable(false);
-        btnCollect.setDisable(true);
-        betID.setDisable(true);
-        balancePayout.setText(String.valueOf(betAmount));
+                Platform.runLater(() -> {
+                    btnHigh.setDisable(false);
+                    btnLow.setDisable(false);
+                    btnSkip.setDisable(false);
+                    btnCollect.setDisable(true);
+                    betID.setDisable(true);
+                    balancePayout.setText(String.valueOf(betAmount));
+                });
+            }
+        });
+        thread.start();
 
         return cardNumber1;
     }
-
 
 
 
@@ -460,7 +464,7 @@ public class HiloController {
         pauseTransition.setOnFinished(event -> {
             btnHigh.setDisable(false);
             btnLow.setDisable(false);
-            if(skipCounter >= 8){
+            if(skipCounter >= 7){
                 skipCounter++;
                 disableSkipButton();
             } else {
