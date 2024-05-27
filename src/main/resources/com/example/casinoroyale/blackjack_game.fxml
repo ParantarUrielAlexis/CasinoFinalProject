@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.BlackjackGame">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="chart.css, styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.casinoroyale.BlackjackGame">
    <children>
       <ImageView fx:id="ivBackground" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
@@ -71,9 +71,9 @@
       </AnchorPane>
       <HBox layoutY="679.0" prefHeight="68.0" prefWidth="1920.0">
          <children>
-            <Label fx:id="labelStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="68.0" prefWidth="1206.0" text="Enter Bet amount to start a game." textFill="WHITE">
+            <Label fx:id="labelStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="68.0" prefWidth="1185.0"  text="Enter Bet amount to start a game." textFill="WHITE">
                <font>
-                  <Font size="46.0" />
+                  <Font size="53.0" />
                </font>
             </Label>
          </children>
@@ -88,7 +88,7 @@
                   <Font name="Times New Roman Bold" size="45.0" />
                </font>
             </Label>
-            <Label fx:id="labelBalance" prefHeight="71.0" prefWidth="301.0" textFill="WHITE">
+            <Label fx:id="labelBalance" prefHeight="62.0" prefWidth="560.0" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold Italic" size="42.0" />
                </font>

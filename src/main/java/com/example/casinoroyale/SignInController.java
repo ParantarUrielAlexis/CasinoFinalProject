@@ -1,17 +1,16 @@
 package com.example.casinoroyale;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,6 +20,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class SignInController {
 
@@ -77,7 +77,7 @@ public class SignInController {
     }
 
     @FXML
-    protected void handleSignIn(ActionEvent event) {
+    protected void handleSignIn(ActionEvent ignoredEvent) {
         String username = tfUsername.getText();
         String password = pfPassword.getText();
 
@@ -158,17 +158,18 @@ public class SignInController {
     }
 
     public void handleRegister(MouseEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
-
             Parent root = loader.load();
 
             // Calculate the DPI scaling factor
             double dpiScale = ScreenHelper.getDPIScale();
 
-            // Apply the scaling transformation
-            Scale scale = new Scale(dpiScale, dpiScale);
-            root.getTransforms().add(scale);
+            // Apply the scaling transformation to the root node if it's an AnchorPane
+            if (root instanceof AnchorPane anchorPane) {
+                Scale scale = new Scale(dpiScale, dpiScale);
+                anchorPane.getTransforms().add(scale);
+            }
 
             Scene scene = new Scene(root);
 
@@ -183,4 +184,19 @@ public class SignInController {
         }
     }
 
+    public void exitProgOnClick() {
+        exit();
+    }
+
+    static void exit() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to exit?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.casinoroyale;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -47,7 +48,8 @@ public class BlackjackGame extends Application {
     @FXML
     public Label labelStatus, labelPlayer, labelDealer, labelBalance, labelPlayerName;
 
-
+    private static MediaPlayer backgroundMediaPlayer;
+    private Timeline typewriterTimeline; // Declare a class-level variable to store the timeline
 
 
     private static class Card {
@@ -189,6 +191,7 @@ public class BlackjackGame extends Application {
         else if (playerSum == dealerSum) {
             message = "Tie!";
             labelDealer.setText("Dealer's Hand: " + reduceDealerAce());
+            balance = currentBet;
             tie();
         }
         else if (playerSum > dealerSum) {
@@ -431,10 +434,15 @@ public class BlackjackGame extends Application {
 
     }
 
+
+
     private void applyTypewriterEffect(Label label, String message) {
         label.setText(""); // Clear the label's text
         final int[] index = {0};
-        Timeline timeline = new Timeline();
+        if (typewriterTimeline != null && typewriterTimeline.getStatus() == Animation.Status.RUNNING) {
+            typewriterTimeline.stop(); // Stop the animation if it's already running
+        }
+        typewriterTimeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(
                 Duration.millis(20), // Adjust the speed of typing here
                 event -> {
@@ -442,15 +450,16 @@ public class BlackjackGame extends Application {
                         label.setText(label.getText() + message.charAt(index[0]));
                         index[0]++;
                     } else {
-                        timeline.stop();
+                        typewriterTimeline.stop();
                     }
                 }
         );
 
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        typewriterTimeline.getKeyFrames().add(keyFrame);
+        typewriterTimeline.setCycleCount(Timeline.INDEFINITE);
+        typewriterTimeline.play();
     }
+
 
     public void cardSound(){
         String s = "src/main/resources/background_musics/cardflick.mp3";
@@ -480,20 +489,19 @@ public class BlackjackGame extends Application {
         mediaPlayer.play();
     }
 
-    public void backGroundMusic(){
+    public void backGroundMusic() {
         String s = "src/main/resources/background_musics/blackjack_background.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.play();
+        backgroundMediaPlayer = new MediaPlayer(h);
+        backgroundMediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music indefinitely
+        backgroundMediaPlayer.play();
     }
 
-    public void stopBackGroundMusic(){
-        String s = "src/main/resources/background_musics/blackjack_background.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.stop();
+    public void stopBackGroundMusic() {
+        if (backgroundMediaPlayer != null) {
+            backgroundMediaPlayer.stop();
+        }
     }
-
     private void updateUserBalanceInDatabase() {
         SQLHelper.updateBalance(SignInController.getUserId(), balance);
     }
