@@ -410,12 +410,28 @@ public class SlotMachine implements Initializable {
     }
 
     public void TopUpBTN(ActionEvent actionEvent) {
+        updateUserBalanceInDatabase();
+
         SMmusic.stop();
-        if (depositRoot != null) { // Check if scene is loaded
-            getDPI(actionEvent, depositRoot);
-        } else {
-            // Handle case where scene is not loaded (e.g., display error message)
-            System.err.println("Deposit scene not loaded. Please try again later.");
+        try {
+            // Load the FXML file
+            Parent root = FXMLLoader.load(getClass().getResource("deposit.fxml"));
+
+            // Create a new scene with the loaded FXML file
+            Scene scene = new Scene(root);
+
+            // Get the stage from the event source
+            Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Set the scene on the primary stage
+            primaryStage.setTitle("Sign In");
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+            // You might want to show an error message to the user here
         }
     }
 }

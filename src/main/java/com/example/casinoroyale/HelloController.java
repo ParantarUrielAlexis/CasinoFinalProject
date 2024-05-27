@@ -391,6 +391,7 @@ public class HelloController {
             // Set the scene on the primary stage
             primaryStage.setTitle("Transaction");
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
         } catch (IOException e) {
             // Handle any IOException that occurs during loading

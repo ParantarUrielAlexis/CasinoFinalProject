@@ -21,7 +21,8 @@ public class Main extends Application {
         Scale scale = new Scale(dpiScale, dpiScale);
         root.getTransforms().add(scale);
 
-        Scene scene = new Scene(root);
+        // could be the key to fix, set the params (1920, 1080)
+        Scene scene = new Scene(root, 1920, 1080);
 
         primaryStage.setTitle("Sign In");
         primaryStage.setFullScreen(true);

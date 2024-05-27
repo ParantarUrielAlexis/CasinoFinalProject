@@ -253,7 +253,6 @@ public class CrashController {
 
     private double getMultiplierIncrement(double multiplier) {
         multBeep.play();
-
         if (multiplier >= 8) return 0.1;
         if (multiplier >= 6) return 0.09;
         if (multiplier >= 4.5) return 0.09;
@@ -273,9 +272,22 @@ public class CrashController {
 
     private double getCrashProbability(double multiplier) {
         double baseProbability = 0.001;
-        double multiplierFactor = 0.005;
-        return baseProbability + (multiplier - 1.0) * multiplierFactor;
+        double multiplierFactor = 0.004; // Lower to allow for higher multipliers more frequently
+        double exponentialFactor = 0.1; // Controls how sharply the probability increases at higher multipliers
+
+        // Calculate the crash probability with an exponential factor
+        double crashProbability = baseProbability + Math.pow(multiplier - 1.0, exponentialFactor) * multiplierFactor;
+
+        // Ensure the crash probability is within reasonable bounds
+        if (crashProbability < 0.001) {
+            crashProbability = 0.001;
+        } else if (crashProbability > 1.0) {
+            crashProbability = 1.0;
+        }
+
+        return crashProbability;
     }
+
 
     private void updateMultiplierLabels(double multiplier) {
         Label label = new Label(String.format("%.2fx", multiplier));
