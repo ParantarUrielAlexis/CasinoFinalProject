@@ -6,12 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
@@ -62,6 +64,7 @@ public class SlotMachine implements Initializable {
 
     private Parent depositRoot;
     private Parent gobackRoot;
+    private final AudioClip SMmusic = new AudioClip(Objects.requireNonNull(getClass().getResource("/background_musics/SlotMachineMusic.mp3")).toString());
 
 
 
@@ -195,7 +198,8 @@ public class SlotMachine implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SMmusic();
+        SMmusic.setCycleCount(AudioClip.INDEFINITE);
+        SMmusic.play();
         userBalance = (int) retrieveUserBalance();
         Balance.setText(userBalance+"");
         Total.setText(TotalBet+"");
@@ -249,55 +253,91 @@ public class SlotMachine implements Initializable {
         pauseTransition.play();
     }
 
-    public void Shuffle1(){
-        Randomizer1= new Random().nextInt(10);
-        c1 = Randomizer1;
-        String imagePath1 = "/SlotMachine/" + Paths2.get(Randomizer1);
-        Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath1)));
+    public void Shuffle1() {
 
-        try{
-            Card1.setImage(image1);
-        }catch (Exception e){
-            System.err.println("Error loading image: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Thread randomizerThread1 = new Thread(() -> {
+            int randomNumber1 = new Random().nextInt(10);
+            c1 = randomNumber1;
+            String imagePath1 = "/SlotMachine/" + Paths1.get(randomNumber1);
+
+            Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath1)));
+            try {
+                Card1.setImage(image1);
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        randomizerThread1.start();
+
     }
 
-    public void Shuffle2(){
-        Randomizer2 = new Random().nextInt(10);
-        c2 = Randomizer2;
-        String imagePath2 = "/SlotMachine/" + Paths2.get(Randomizer2);
-        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath2)));
+    public void Shuffle2() {
 
-        try{
-            Card2.setImage(image2);
-        }catch (Exception e){
-            System.err.println("Error loading image: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Thread randomizerThread2 = new Thread(() -> {
+            int randomNumber2 = new Random().nextInt(10);
+            c2  = randomNumber2;
+            String imagePath2 = "/SlotMachine/" + Paths2.get(randomNumber2);
+
+            Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath2)));
+            try {
+                Card2.setImage(image2);
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        randomizerThread2.start();
+
     }
 
-    public void Shuffle3(){
-        Randomizer3 = new Random().nextInt(10);
-        c3 = Randomizer3;
-        String imagePath3 = "/SlotMachine/" + Paths3.get(Randomizer3);
-        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath3)));
+    public void Shuffle3() {
 
-        try{
-            Card3.setImage(image3);
-        }catch (Exception e){
-            System.err.println("Error loading image: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Thread randomizerThread3 = new Thread(() -> {
+            int randomNumber3 = new Random().nextInt(10);
+            c3 = randomNumber3;
+            String imagePath3 = "/SlotMachine/" + Paths3.get(randomNumber3);
+
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath3)));
+            try {
+                Card3.setImage(image3);
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        randomizerThread3.start();
+
     }
 
     public void onBackClick(ActionEvent event) {
-        stopMusic();
-        if (gobackRoot != null) { // Check if scene is loaded
-            getDPI(event, gobackRoot);
-        } else {
-            // Handle case where scene is not loaded (e.g., display error message)
-            System.err.println("Deposit scene not loaded. Please try again later.");
+        SMmusic.stop();
+        try {
+            // Load the FXML file
+
+            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+
+            double dpiScale = ScreenHelper.getDPIScale();
+
+
+            Scale scale = new Scale(dpiScale, dpiScale);
+            root.getTransforms().add(scale);
+
+            // Create a new scene with the loaded FXML file
+            Scene scene = new Scene(root);
+
+            // Get the stage from the event source
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the scene on the primary stage
+            primaryStage.setTitle("Sign In");
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+        } catch (IOException e) {
+            // Handle any IOException that occurs during loading
+            e.printStackTrace();
+            // You might want to show an error message to the user here
         }
     }
 
@@ -315,28 +355,8 @@ public class SlotMachine implements Initializable {
         stage.show();
     }
 
-    public void SMmusic() {
 
-        String sm = "src/main/resources/background_musics/SlotMachineMusic.mp3";
-        Media smh = new Media(Paths.get(sm).toUri().toString());
-        mediaPlayer = new MediaPlayer(smh);
 
-        // Add event handler for end of media
-        mediaPlayer.setOnEndOfMedia(() -> {
-            // Rewind the media to the beginning
-            mediaPlayer.seek(Duration.ZERO);
-            // Play the media again
-            mediaPlayer.play();
-        });
-
-        mediaPlayer.play();
-    }
-
-    public void stopMusic() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();  // Stop the media player
-        }
-    }
 
 
     private double retrieveUserBalance() {
@@ -390,7 +410,7 @@ public class SlotMachine implements Initializable {
     }
 
     public void TopUpBTN(ActionEvent actionEvent) {
-        stopMusic();
+        SMmusic.stop();
         if (depositRoot != null) { // Check if scene is loaded
             getDPI(actionEvent, depositRoot);
         } else {
