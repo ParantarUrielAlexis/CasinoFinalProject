@@ -134,7 +134,7 @@ public class BlackjackGame extends Application {
             ImageView[] playerHandViews = {ivPlayerHand1, ivPlayerHand2, ivPlayerHand3, ivPlayerHand4, ivPlayerHand5, ivPlayerHand6, ivPlayerHand7};
             Image cardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(card.getImagePath())));
             playerHandViews[playerHand.size() - 1].setImage(cardImg);
-            if (reducePlayerAce() > 21) { //A + 2 + J --> 1 + 2 + J
+            if (reducePlayerAce() >= 21) { //A + 2 + J --> 1 + 2 + J
                 labelPlayer.setText("Player's Hand: " + reducePlayerAce());
                 applyTypewriterEffect(labelStatus, "You Exceeded.");
                 btnHit.setDisable(true);
@@ -215,6 +215,11 @@ public class BlackjackGame extends Application {
     }
     @FXML
     public void btnBetOnAction() {
+
+        if(reducePlayerAce() == 21){
+            btnBet.setDisable(true);
+            btnHit.setDisable(true);
+        }
         cardSound();
         labelPlayerName.setText(name);
         String betText = tfBet.getText();
